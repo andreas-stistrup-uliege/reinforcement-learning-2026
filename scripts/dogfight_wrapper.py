@@ -117,6 +117,13 @@ class DogfightSelfPlayEnv(gymnasium.Env):
         if self.agent_id not in self.pz_env.agents:
             terminated = True
 
+        # End on win too. PyFlyt's ParallelEnv is team-size-generic and doesn't
+        # stop when the match is decided; without this, post-kill steps give
+        # no learning signal and the policy drifts into limit cycles. For 1v1
+        # (team_size=1), "match over" = only our agent left in env.agents.
+        if self.team_size == 1 and len(self.pz_env.agents) <= 1:
+            terminated = True
+
         return obs, reward, terminated, truncated, info
 
     def render(self):

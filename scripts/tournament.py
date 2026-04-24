@@ -134,12 +134,52 @@ def load_submission(path):
 
 # ---- Match Runner ----
 
+def _extract_agent_stats(merged_info, steps, agent_hz=30):
+    """Extract detailed stats for one agent from its merged info dict.
+
+    `merged_info` must be the union of every `infos[agent]` seen during the
+    episode — PyFlyt drops dead agents from `env.agents` the step after they
+    die, so the final-step dict would otherwise miss death flags.
+    """
+    health = float(merged_info.get("health", 0.0))
+    received_hits = int(merged_info.get("received_hits", 0))
+    collision = merged_info.get("collision", False)
+    out_of_bounds = merged_info.get("out_of_bounds", False)
+    team_win = merged_info.get("team_win", False)
+    dead = merged_info.get("dead", False)
+
+    # Priority: collision/OOB are terminal overrides (they also zero out health,
+    # which would otherwise trip `dead`). Then shot_down (opponent brought HP to
+    # 0), then team_win (survived), then timeout.
+    if collision:
+        death_cause = "collision"
+    elif out_of_bounds:
+        death_cause = "out_of_bounds"
+    elif dead:
+        death_cause = "shot_down"
+    elif team_win:
+        death_cause = "survived"
+    else:
+        death_cause = "timeout"
+
+    return {
+        "health": health,
+        "received_hits": received_hits,
+        "death_cause": death_cause,
+        "survived": team_win or (health > 0 and not (collision or out_of_bounds)),
+        "survival_time": round(steps / agent_hz, 1),
+    }
+
+
 def run_match(model_a, model_b, n_games=5, max_steps=1800, render_mode=None,
               seed_offset=0):
-    """Run n_games between two models. Returns (wins_a, wins_b, draws).
+    """Run n_games between two models.
 
     model_a always plays as uav_0, model_b as uav_1.
     The environment is symmetric (circular spawn), so no side-swapping needed.
+
+    Returns a dict with wins, draws, rewards, and detailed per-game stats
+    including death causes, health, hits, and survival time.
     """
     from PyFlyt.pz_envs import MAFixedwingDogfightEnvV2
 
@@ -160,6 +200,12 @@ def run_match(model_a, model_b, n_games=5, max_steps=1800, render_mode=None,
 
             observations, infos = env.reset(seed=seed_offset + game_idx)
             rewards_acc = {agent: 0.0 for agent in env.agents}
+            # Accumulate infos across steps. PyFlyt drops an agent from
+            # env.agents the step after death, so the last-step infos misses
+            # its death flag — we need to remember it when it first fires.
+            # received_hits in PyFlyt is already cumulative, so plain update
+            # keeps the max-seen value; terminal flags are sticky-or'd.
+            merged_infos = {a: dict(i) for a, i in infos.items()}
 
             for step in range(max_steps):
                 actions = {}
@@ -172,6 +218,13 @@ def run_match(model_a, model_b, n_games=5, max_steps=1800, render_mode=None,
 
                 for agent in rewards:
                     rewards_acc[agent] = rewards_acc.get(agent, 0.0) + rewards.get(agent, 0.0)
+                for agent, info in infos.items():
+                    dst = merged_infos.setdefault(agent, {})
+                    for k, v in info.items():
+                        if k in ("collision", "out_of_bounds", "team_win", "dead"):
+                            dst[k] = dst.get(k, False) or v
+                        else:
+                            dst[k] = v
 
                 all_done = all(
                     terminations.get(a, True) or truncations.get(a, False)
@@ -179,51 +232,54 @@ def run_match(model_a, model_b, n_games=5, max_steps=1800, render_mode=None,
                 ) or len(env.agents) == 0
                 if all_done:
                     break
+                # Match is decided once only one side remains. Avoids the
+                # survivor flying into OOB later and flipping the reward sign.
+                if len(env.agents) <= 1:
+                    break
+
+            final_steps = step + 1
 
             try:
                 env.close()
             except Exception:
                 pass
 
-            # Determine winner based on infos
-            a_won, b_won = False, False
-            for agent, info in infos.items():
-                if info.get("team_win", False):
-                    if agent == "uav_0":
-                        a_won = True
-                    else:
-                        b_won = True
+            stats_a = _extract_agent_stats(merged_infos.get("uav_0", {}), final_steps)
+            stats_b = _extract_agent_stats(merged_infos.get("uav_1", {}), final_steps)
+            # Damage dealt = combat hits only (hits received_by_opponent ×
+            # damage_per_hit), so crashes/OOB don't falsely credit the other.
+            stats_a["damage_dealt"] = round(0.003 * stats_b["received_hits"], 3)
+            stats_b["damage_dealt"] = round(0.003 * stats_a["received_hits"], 3)
+            stats_a["kill"] = bool(stats_b["death_cause"] == "shot_down")
+            stats_b["kill"] = bool(stats_a["death_cause"] == "shot_down")
 
-            # If no team_win signal, use rewards
-            if not a_won and not b_won:
-                r_a = rewards_acc.get("uav_0", 0.0)
-                r_b = rewards_acc.get("uav_1", 0.0)
-                if r_a > r_b + 50:
-                    a_won = True
-                elif r_b > r_a + 50:
-                    b_won = True
-
-            if a_won and not b_won:
+            # Winner = higher accumulated PyFlyt reward. Ties are draws.
+            # OOB/collision give -1000 and team_win gives +300, so terminal
+            # events dominate naturally and no extra margin is needed.
+            r_a = rewards_acc.get("uav_0", 0.0)
+            r_b = rewards_acc.get("uav_1", 0.0)
+            if r_a > r_b:
                 wins_a += 1
                 result = "A"
-            elif b_won and not a_won:
+            elif r_b > r_a:
                 wins_b += 1
                 result = "B"
             else:
                 draws += 1
                 result = "draw"
 
-            r_a = rewards_acc.get("uav_0", 0.0)
-            r_b = rewards_acc.get("uav_1", 0.0)
             total_reward_a += r_a
             total_reward_b += r_b
 
             game_details.append({
                 "game": game_idx,
                 "result": result,
+                "steps": final_steps,
+                "duration": round(final_steps / 30, 1),
                 "reward_a": float(r_a),
                 "reward_b": float(r_b),
-                "steps": step + 1,
+                "stats_a": stats_a,
+                "stats_b": stats_b,
             })
 
         except Exception as e:
@@ -276,6 +332,10 @@ def run_tournament(submission_paths, matches_per_pair=5, render=False):
     total_matches = len(pairs)
     all_match_results = []
 
+    # Per-candidate reward aggregation across every game they appear in (as A or B).
+    reward_totals = {name: 0.0 for name in models}
+    game_counts = {name: 0 for name in models}
+
     print(f"\nRunning {total_matches} matches ({matches_per_pair} games each)...")
     print("=" * 60)
 
@@ -299,6 +359,13 @@ def run_tournament(submission_paths, matches_per_pair=5, render=False):
             score_a = 0.5
         elo.update(name_a, name_b, score_a)
 
+        # Accumulate per-candidate rewards from non-error games only.
+        played = [g for g in result["games"] if g.get("result") != "error"]
+        reward_totals[name_a] += sum(g["reward_a"] for g in played)
+        reward_totals[name_b] += sum(g["reward_b"] for g in played)
+        game_counts[name_a] += len(played)
+        game_counts[name_b] += len(played)
+
         print(f"    {name_a}: {result['wins_a']}W  |  "
               f"{name_b}: {result['wins_b']}W  |  "
               f"Draws: {result['draws']}  |  "
@@ -312,19 +379,32 @@ def run_tournament(submission_paths, matches_per_pair=5, render=False):
 
     # Final rankings
     rankings = elo.get_rankings()
+    mean_rewards = {
+        n: (reward_totals[n] / game_counts[n]) if game_counts[n] else 0.0
+        for n in models
+    }
 
     print("\n" + "=" * 60)
     print("FINAL RANKINGS")
     print("=" * 60)
-    print(f"{'Rank':<6} {'Player':<35} {'Elo':>8}")
-    print("-" * 60)
+    print(f"{'Rank':<6} {'Player':<35} {'Elo':>8}  {'MeanRwd':>9}  {'Games':>5}")
+    print("-" * 70)
     for rank, (name, rating) in enumerate(rankings, 1):
-        print(f"  {rank:<4} {name:<35} {rating:>8.1f}")
-    print("=" * 60)
+        print(f"  {rank:<4} {name:<35} {rating:>8.1f}  "
+              f"{mean_rewards[name]:>+9.1f}  {game_counts[name]:>5}")
+    print("=" * 70)
 
     return {
-        "rankings": [{"rank": i+1, "name": n, "elo": round(r, 1)}
-                      for i, (n, r) in enumerate(rankings)],
+        "rankings": [
+            {
+                "rank": i + 1,
+                "name": n,
+                "elo": round(r, 1),
+                "mean_reward": round(mean_rewards[n], 2),
+                "games": game_counts[n],
+            }
+            for i, (n, r) in enumerate(rankings)
+        ],
         "matches": all_match_results,
         "match_history": elo.match_history,
     }
