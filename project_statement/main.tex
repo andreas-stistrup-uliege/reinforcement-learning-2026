@@ -249,7 +249,7 @@ Submit Python files named \texttt{groupXX\_name.py} (e.g., \texttt{group03\_aggr
 
 The evaluation server loads your submission inside a pinned Python~3.10 venv whose exact dependency versions are listed in \texttt{requirements.txt} at the root of the repository (\texttt{numpy}, \texttt{torch}, \texttt{stable-baselines3}, \texttt{gymnasium}, \texttt{pyflyt}, \ldots). Pickled checkpoints embed version-specific module paths and Python code objects; a model saved under a different numpy or Python version may fail to load at grading time.
 
-You do not need to train inside this environment. However, before submitting, \textbf{re-export your final model from a venv matching \texttt{requirements.txt}}. Loading and re-saving is sufficient — no retraining required:
+You do not need to train inside this environment. However, before submitting, \textbf{re-export your final model from a venv matching \texttt{requirements.txt}}. Loading and re-saving is sufficient; no retraining required:
 
 \begin{lstlisting}[language=Python, numbers=none]
 from stable_baselines3 import PPO  # or SAC, etc.
@@ -260,14 +260,7 @@ Submissions that fail to load will be flagged and you will be asked to re-export
 
 \subsection{Scoring}
 
-Agents play a round-robin tournament, Elo-rated. Each 1v1 match consists of several games; the winner of a game is \textbf{the agent with the higher accumulated PyFlyt reward over the episode} (ties are draws). This is exactly the reward returned by \texttt{env.step()} — the same signal your policy sees during training. In particular, PyFlyt's default reward already encodes the intuitive notion of ``who fought better'':
-\begin{itemize}[nosep]
-  \item \textbf{Dense shaping} rewards closing distance on the opponent while chasing ($+4.0 \cdot \Delta\text{dist}$), improving aim angle when in range ($+30.0 \cdot \Delta\text{angle}$), and keeping the enemy inside the $0.07$\,rad lethal cone ($+3.0 / (\text{angle}+0.1)$). Symmetric penalties apply when the opponent does these things to you.
-  \item \textbf{Hit reward}: $+20.0$ per physics substep while the opponent is within the lethal cone and $<20$\,m, minus a symmetric penalty when you are being hit.
-  \item \textbf{Boundary shaping}: bonus for being above $\sim10$\,m altitude and penalty as you approach the dome boundary.
-  \item \textbf{Terminal overrides} (replace, not add): \textbf{collision or out-of-bounds $\rightarrow -1000$} (effectively an instant loss), eliminating all enemies $\rightarrow +300$.
-\end{itemize}
-Ranking bonus: top-3 (+1pt), top-5 (+0.5pt), based on your best agent only.
+Agents play a round-robin tournament, Elo-rated. Ranking bonus: top-3 (+1pt), top-5 (+0.5pt), based on your best agent only.
 
 \subsection{Leaderboard}
 
