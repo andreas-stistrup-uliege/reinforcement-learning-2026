@@ -3,10 +3,10 @@
 # If you trained elsewhere, re-export your model from a venv matching these
 # versions before submitting (load + save is enough — no need to retrain).
 
-numpy==2.2.6
-torch==2.10.0
-stable-baselines3==2.7.1
-gymnasium==1.2.3
-pettingzoo==1.25.0
-pybullet==3.2.7
-PyFlyt==0.29.0
+numpy
+torch
+stable-baselines3
+gymnasium
+pettingzoo
+pybullet
+PyFlyt
