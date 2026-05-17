@@ -52,7 +52,7 @@ CLOSING_SCALE = 0.01
 HEADING_SCALE = 0.005
 
 # ── SAC hyperparameters  (~900k steps) ────────────────────────
-SAC_TOTAL_TIMESTEPS = 1#900_000
+SAC_TOTAL_TIMESTEPS = 900_000
 SAC_BATCH_SIZE      = 256
 SAC_GAMMA           = 0.99
 SAC_TAU             = 0.005
@@ -62,7 +62,7 @@ SAC_BUFFER          = 500_000
 SAC_LEARNING_STARTS = 1_000
 
 # ── PPO hyperparameters  (~900k steps) ────────────────────────
-PPO_TIMESTEPS = 1#900_000
+PPO_TIMESTEPS = 900_000
 PPO_N_STEPS   = 4096
 PPO_BATCH     = 128
 PPO_EPOCHS    = 10
