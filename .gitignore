@@ -18,9 +18,13 @@ wandb/
 # IDE
 .vscode/
 .idea/
+.gitignore
 
 # Private scripts (not distributed to students)
 scripts/update_leaderboard.py
 
 # Claude
 .claude/
+
+# WanDB
+api.txt

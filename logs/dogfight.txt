@@ -1,0 +1,4 @@
+State dim  : 37
+Action dim : 4
+SAC steps  : 900,000
+PPO steps  : 900,000

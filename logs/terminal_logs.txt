@@ -1,0 +1,1246 @@
+(base) PS C:\Users\Megaport> cd /d F:\ULiege\Data Science\RL
+Set-Location : A positional parameter cannot be found that accepts argument 'F:\ULiege\Data'.
+At line:1 char:1
++ cd /d F:\ULiege\Data Science\RL
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [Set-Location], ParameterBindingException
+    + FullyQualifiedErrorId : PositionalParameterNotFound,Microsoft.PowerShell.Commands.SetLocationCommand
+
+(base) PS C:\Users\Megaport> cd /d F:\ULiege\Data Science\RL\
+Set-Location : A positional parameter cannot be found that accepts argument 'F:\ULiege\Data'.
+At line:1 char:1
++ cd /d F:\ULiege\Data Science\RL\
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [Set-Location], ParameterBindingException
+    + FullyQualifiedErrorId : PositionalParameterNotFound,Microsoft.PowerShell.Commands.SetLocationCommand
+
+(base) PS C:\Users\Megaport> cd F:\ULiege\Data Science\RL
+Set-Location : A positional parameter cannot be found that accepts argument 'Science\RL'.
+At line:1 char:1
++ cd F:\ULiege\Data Science\RL
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [Set-Location], ParameterBindingException
+    + FullyQualifiedErrorId : PositionalParameterNotFound,Microsoft.PowerShell.Commands.SetLocationCommand
+
+(base) PS C:\Users\Megaport> cd "F:\ULiege\Data Science\RL"
+(base) PS F:\ULiege\Data Science\RL> conda activate rk
+
+EnvironmentNameNotFound: Could not find conda environment: rk
+You can list all discoverable environments with `conda info --envs`.
+
+
+Invoke-Expression : Cannot bind argument to parameter 'Command' because it is an empty string.
+At F:\Dev\anaconda\shell\condabin\Conda.psm1:76 char:36
++         Invoke-Expression -Command $activateCommand;
++                                    ~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidData: (:) [Invoke-Expression], ParameterBindingValidationException
+    + FullyQualifiedErrorId : ParameterArgumentValidationErrorEmptyStringNotAllowed,Microsoft.PowerShell.Commands.Invo
+   keExpressionCommand
+
+(base) PS F:\ULiege\Data Science\RL> conda activate rl
+(rl) PS F:\ULiege\Data Science\RL> python .\waypoints_run.py
+pybullet build time: May  6 2026 12:18:53
+
+============================================================
+  FLIGHT MODE 7  (1/4)
+============================================================
+
+
+── SAC  flight_mode=7 ──────────────────────────
+
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from C:\Users\Megaport\_netrc.
+wandb: Currently logged in as: andreas-stistrup (info8003-rl-project) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.27.0
+wandb: Run data is saved locally in F:\ULiege\Data Science\RL\wandb\run-20260517_214414-6uvizl79
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run SAC-curriculum-mode7
+wandb:  View project at https://wandb.ai/info8003-rl-project/waypoints
+wandb:  View run at https://wandb.ai/info8003-rl-project/waypoints/runs/6uvizl79
+  [SAC] ep 50  stage=1wp  last-50 mean=-689.13  success=0.02
+  [SAC] ep 100  stage=1wp  last-50 mean=-715.98  success=0.06
+
+SAC done. Stage history: []
+Episodes: 145
+  [SAC (curriculum)] ep 1/10  return=-60.84
+  [SAC (curriculum)] ep 2/10  return=-87.54
+  [SAC (curriculum)] ep 3/10  return=-108.51
+  [SAC (curriculum)] ep 4/10  return=-92.85
+  [SAC (curriculum)] ep 5/10  return=-94.66
+  [SAC (curriculum)] ep 6/10  return=-84.35
+  [SAC (curriculum)] ep 7/10  return=-72.90
+  [SAC (curriculum)] ep 8/10  return=-77.80
+  [SAC (curriculum)] ep 9/10  return=-88.20
+  [SAC (curriculum)] ep 10/10  return=-90.86
+  SAC (curriculum)      mean=  -85.85  std=  12.38
+wandb: WARNING Linked 1 file into the W&B run directory (hardlinks); call wandb.save again to sync new files.
+wandb:
+wandb: Run history:
+wandb: curriculum_stage ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:          episode ▁▁▁▁▁▂▂▂▂▂▃▃▃▃▄▄▄▄▄▅▅▅▅▅▅▆▆▆▆▆▇▇▇▇▇▇████
+wandb:   episode_return ▂▄▃▇▃▁▂▅▃▃▂▂▂▁▂▃▂▂█▃▂▂▂▂▃▂▂▄▂▃▂▃▂▃▂▂▂▃▂▂
+wandb: eval_mean_return ▁
+wandb:  eval_std_return ▁
+wandb:     success_rate ▁▁▁█▆▅▄▄▄▄▃▃▃▃▃▃▃▃▁▃▅▅▇▇▇▇▇▇▇▇▇▇▅▅▃▁▁▁▁▁
+wandb:
+wandb: Run summary:
+wandb: curriculum_stage 1
+wandb:          episode 144
+wandb:   episode_return -851.80925
+wandb: eval_mean_return -85.85215
+wandb:  eval_std_return 12.38428
+wandb:     success_rate 0
+wandb:
+wandb:  View run SAC-curriculum-mode7 at: https://wandb.ai/info8003-rl-project/waypoints/runs/6uvizl79
+wandb:  View project at: https://wandb.ai/info8003-rl-project/waypoints
+wandb: Synced 5 W&B file(s), 1 media file(s), 0 artifact file(s) and 1 other file(s)
+wandb: Find logs at: .\wandb\run-20260517_214414-6uvizl79\logs
+SAC run closed.
+
+── PPO  flight_mode=7 ──────────────────────────
+
+wandb: Tracking run with wandb version 0.27.0
+wandb: Run data is saved locally in F:\ULiege\Data Science\RL\wandb\run-20260517_235814-nhszrm3s
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run PPO-curriculum-mode7
+wandb:  View project at https://wandb.ai/info8003-rl-project/waypoints
+wandb:  View run at https://wandb.ai/info8003-rl-project/waypoints/runs/nhszrm3s
+F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\common\on_policy_algorithm.py:150: UserWarning: You are trying to run PPO on the GPU, but it is primarily intended to run on the CPU when not using a CNN policy (you are using ActorCriticPolicy which should be a MlpPolicy). See https://github.com/DLR-RM/stable-baselines3/issues/1245 for more info. You can pass `device='cpu'` or `export CUDA_VISIBLE_DEVICES=` to force using the CPU.Note: The model will train, but the GPU utilization will be poor and the training might take longer than on CPU.
+  warnings.warn(
+
+Stage 1 — attempt 1/1 (125000 timesteps) ...
+Traceback (most recent call last):
+  File "F:\ULiege\Data Science\RL\waypoints_run.py", line 420, in <module>
+    ppo           = train_ppo_stage(ppo, current_stage, PPO_TIMESTEPS_PER_STAGE)
+  File "F:\ULiege\Data Science\RL\waypoints_run.py", line 374, in train_ppo_stage
+    ppo_model.learn(
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\ppo\ppo.py", line 311, in learn
+    return super().learn(
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\common\on_policy_algorithm.py", line 324, in learn
+    continue_training = self.collect_rollouts(self.env, callback, self.rollout_buffer, n_rollout_steps=self.n_steps)
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\common\on_policy_algorithm.py", line 202, in collect_rollouts
+    actions, values, log_probs = self.policy(obs_tensor)
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\torch\nn\modules\module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\torch\nn\modules\module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\common\policies.py", line 656, in forward
+    log_prob = distribution.log_prob(actions)
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\common\distributions.py", line 177, in log_prob
+    log_prob = self.distribution.log_prob(actions)
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\torch\distributions\normal.py", line 92, in log_prob
+    -((value - self.loc) ** 2) / (2 * var)
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\torch\_tensor.py", line 39, in wrapped
+    return f(*args, **kwargs)
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "F:\ULiege\Data Science\RL\waypoints_run.py", line 420, in <module>
+    ppo           = train_ppo_stage(ppo, current_stage, PPO_TIMESTEPS_PER_STAGE)
+  File "F:\ULiege\Data Science\RL\waypoints_run.py", line 374, in train_ppo_stage
+    ppo_model.learn(
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\ppo\ppo.py", line 311, in learn
+    return super().learn(
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\common\on_policy_algorithm.py", line 324, in learn
+    continue_training = self.collect_rollouts(self.env, callback, self.rollout_buffer, n_rollout_steps=self.n_steps)
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\common\on_policy_algorithm.py", line 202, in collect_rollouts
+    actions, values, log_probs = self.policy(obs_tensor)
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\torch\nn\modules\module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\torch\nn\modules\module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\common\policies.py", line 656, in forward
+    log_prob = distribution.log_prob(actions)
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\common\distributions.py", line 177, in log_prob
+    log_prob = self.distribution.log_prob(actions)
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\torch\distributions\normal.py", line 92, in log_prob
+    -((value - self.loc) ** 2) / (2 * var)
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\torch\_tensor.py", line 39, in wrapped
+    return f(*args, **kwargs)
+KeyboardInterrupt
+wandb:
+wandb: 🚀 View run PPO-curriculum-mode7 at: https://wandb.ai/info8003-rl-project/waypoints/runs/nhszrm3s
+wandb: Find logs at: wandb\run-20260517_235814-nhszrm3s\logs
+(rl) PS F:\ULiege\Data Science\RL> python .\waypoints_run.py
+pybullet build time: May  6 2026 12:18:53
+
+============================================================
+  FLIGHT MODE 7  (1/5)
+============================================================
+
+
+── PPO  flight_mode=7 ──────────────────────────
+
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from C:\Users\Megaport\_netrc.
+wandb: Currently logged in as: andreas-stistrup (info8003-rl-project) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.27.0
+wandb: Run data is saved locally in F:\ULiege\Data Science\RL\wandb\run-20260518_001823-syvj53zu
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run PPO-curriculum-mode7
+wandb:  View project at https://wandb.ai/info8003-rl-project/waypoints
+wandb:  View run at https://wandb.ai/info8003-rl-project/waypoints/runs/syvj53zu
+F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\common\on_policy_algorithm.py:150: UserWarning: You are trying to run PPO on the GPU, but it is primarily intended to run on the CPU when not using a CNN policy (you are using ActorCriticPolicy which should be a MlpPolicy). See https://github.com/DLR-RM/stable-baselines3/issues/1245 for more info. You can pass `device='cpu'` or `export CUDA_VISIBLE_DEVICES=` to force using the CPU.Note: The model will train, but the GPU utilization will be poor and the training might take longer than on CPU.
+  warnings.warn(
+
+Stage 1 — attempt 1/1 (125000 timesteps) ...
+  success_rate = 0.04  (threshold = 0.7)
+  → Advancing to 2 waypoints
+
+Stage 2 — attempt 1/1 (125000 timesteps) ...
+  success_rate = 0.02  (threshold = 0.7)
+  → Advancing to 3 waypoints
+
+Stage 3 — attempt 1/1 (125000 timesteps) ...
+  success_rate = 0.10  (threshold = 0.7)
+  → Advancing to 4 waypoints
+
+Stage 4 — attempt 1/1 (125000 timesteps) ...
+  success_rate = 0.14  (threshold = 0.7)
+
+PPO done. Total timesteps: 500,000
+  [PPO (curriculum)] ep 1/10  return=-104.86
+  [PPO (curriculum)] ep 2/10  return=-107.80
+  [PPO (curriculum)] ep 3/10  return=-109.82
+  [PPO (curriculum)] ep 4/10  return=-87.10
+  [PPO (curriculum)] ep 5/10  return=-89.49
+  [PPO (curriculum)] ep 6/10  return=-81.86
+  [PPO (curriculum)] ep 7/10  return=-70.37
+  [PPO (curriculum)] ep 8/10  return=-73.53
+  [PPO (curriculum)] ep 9/10  return=-83.39
+  [PPO (curriculum)] ep 10/10  return=-87.14
+  PPO (curriculum)      mean=  -89.54  std=  13.08
+wandb: WARNING Linked 1 file into the W&B run directory (hardlinks); call wandb.save again to sync new files.
+wandb:
+wandb: Run history:
+wandb:            attempt ▁▁▁▁
+wandb: curriculum_advance ▁▅█
+wandb:   eval_mean_return ▁
+wandb:    eval_std_return ▁
+wandb:              stage ▁▃▆█
+wandb:       success_rate ▂▁▆█
+wandb:           total_ts ▁▁▃▃▆▆█
+wandb:
+wandb: Run summary:
+wandb:            attempt 1
+wandb: curriculum_advance 4
+wandb:   eval_mean_return -89.53632
+wandb:    eval_std_return 13.08403
+wandb:              stage 4
+wandb:       success_rate 0.14
+wandb:           total_ts 500000
+wandb:
+wandb:  View run PPO-curriculum-mode7 at: https://wandb.ai/info8003-rl-project/waypoints/runs/syvj53zu
+wandb:  View project at: https://wandb.ai/info8003-rl-project/waypoints
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 1 other file(s)
+wandb: Find logs at: .\wandb\run-20260518_001823-syvj53zu\logs
+PPO run closed.
+
+── Mode 7 summary ───────────────────────────────
+Traceback (most recent call last):
+  File "F:\ULiege\Data Science\RL\waypoints_run.py", line 461, in <module>
+    print(f"  SAC  mean={sac_mean:.2f}  std={sac_std:.2f}")
+NameError: name 'sac_mean' is not defined. Did you mean: 'ppo_mean'?
+Traceback (most recent call last):
+  File "F:\ULiege\Data Science\RL\waypoints_run.py", line 461, in <module>
+    print(f"  SAC  mean={sac_mean:.2f}  std={sac_std:.2f}")
+NameError: name 'sac_mean' is not defined. Did you mean: 'ppo_mean'?
+(rl) PS F:\ULiege\Data Science\RL> python .\waypoints_run.py
+pybullet build time: May  6 2026 12:18:53
+
+============================================================
+  FLIGHT MODE 7  (1/5)
+============================================================
+
+
+── PPO  flight_mode=7 ──────────────────────────
+
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from C:\Users\Megaport\_netrc.
+wandb: Currently logged in as: andreas-stistrup (info8003-rl-project) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.27.0
+wandb: Run data is saved locally in F:\ULiege\Data Science\RL\wandb\run-20260518_012112-6mkk6jha
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run PPO-curriculum-mode7
+wandb:  View project at https://wandb.ai/info8003-rl-project/waypoints
+wandb:  View run at https://wandb.ai/info8003-rl-project/waypoints/runs/6mkk6jha
+F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\common\on_policy_algorithm.py:150: UserWarning: You are trying to run PPO on the GPU, but it is primarily intended to run on the CPU when not using a CNN policy (you are using ActorCriticPolicy which should be a MlpPolicy). See https://github.com/DLR-RM/stable-baselines3/issues/1245 for more info. You can pass `device='cpu'` or `export CUDA_VISIBLE_DEVICES=` to force using the CPU.Note: The model will train, but the GPU utilization will be poor and the training might take longer than on CPU.
+  warnings.warn(
+
+Stage 1 — attempt 1/1 (125000 timesteps) ...
+  success_rate = 0.04  (threshold = 0.7)
+  → Advancing to 2 waypoints
+
+Stage 2 — attempt 1/1 (125000 timesteps) ...
+  success_rate = 0.02  (threshold = 0.7)
+  → Advancing to 3 waypoints
+
+Stage 3 — attempt 1/1 (125000 timesteps) ...
+  success_rate = 0.10  (threshold = 0.7)
+  → Advancing to 4 waypoints
+
+Stage 4 — attempt 1/1 (125000 timesteps) ...
+  success_rate = 0.14  (threshold = 0.7)
+
+PPO done. Total timesteps: 500,000
+wandb: WARNING Linked 1 file into the W&B run directory (hardlinks); call wandb.save again to sync new files.
+wandb:
+wandb: Run history:
+wandb:            attempt ▁▁▁▁
+wandb: curriculum_advance ▁▅█
+wandb:              stage ▁▃▆█
+wandb:       success_rate ▂▁▆█
+wandb:           total_ts ▁▁▃▃▆▆█
+wandb:
+wandb: Run summary:
+wandb:            attempt 1
+wandb: curriculum_advance 4
+wandb:              stage 4
+wandb:       success_rate 0.14
+wandb:           total_ts 500000
+wandb:
+wandb:  View run PPO-curriculum-mode7 at: https://wandb.ai/info8003-rl-project/waypoints/runs/6mkk6jha
+wandb:  View project at: https://wandb.ai/info8003-rl-project/waypoints
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 1 other file(s)
+wandb: Find logs at: .\wandb\run-20260518_012112-6mkk6jha\logs
+PPO run closed.
+  [PPO (curriculum)] ep 1/10  return=-57.10
+  [PPO (curriculum)] ep 2/10  return=-87.40
+  [PPO (curriculum)] ep 3/10  return=-89.23
+  [PPO (curriculum)] ep 4/10  return=-87.02
+  [PPO (curriculum)] ep 5/10  return=-88.47
+  [PPO (curriculum)] ep 6/10  return=-82.01
+  [PPO (curriculum)] ep 7/10  return=-70.14
+  [PPO (curriculum)] ep 8/10  return=-74.77
+  [PPO (curriculum)] ep 9/10  return=-84.43
+  [PPO (curriculum)] ep 10/10  return=-87.01
+  PPO (curriculum)      mean=  -80.76  std=   9.88
+wandb: ERROR You must call wandb.init() before wandb.log()
+Traceback (most recent call last):
+  File "F:\ULiege\Data Science\RL\waypoints_run.py", line 460, in <module>
+    wandb.log({"eval_mean_return": ppo_mean, "eval_std_return": ppo_std})
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\wandb\sdk\lib\preinit.py", line 39, in preinit_wrapper
+    raise wandb.Error(f"You must call wandb.init() before {name}()")
+wandb.errors.errors.Error: You must call wandb.init() before wandb.log()
+Traceback (most recent call last):
+  File "F:\ULiege\Data Science\RL\waypoints_run.py", line 460, in <module>
+    wandb.log({"eval_mean_return": ppo_mean, "eval_std_return": ppo_std})
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\wandb\sdk\lib\preinit.py", line 39, in preinit_wrapper
+    raise wandb.Error(f"You must call wandb.init() before {name}()")
+wandb.errors.errors.Error: You must call wandb.init() before wandb.log()
+(rl) PS F:\ULiege\Data Science\RL> python .\waypoints_run.py
+pybullet build time: May  6 2026 12:18:53
+
+============================================================
+  FLIGHT MODE 6  (1/4)
+============================================================
+
+
+── SAC  flight_mode=6 ──────────────────────────
+
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from C:\Users\Megaport\_netrc.
+wandb: Currently logged in as: andreas-stistrup (info8003-rl-project) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.27.0
+wandb: Run data is saved locally in F:\ULiege\Data Science\RL\wandb\run-20260518_032007-ng6n1k6f
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run SAC-curriculum-mode6
+wandb:  View project at https://wandb.ai/info8003-rl-project/waypoints
+wandb:  View run at https://wandb.ai/info8003-rl-project/waypoints/runs/ng6n1k6f
+  [SAC] ep 50  stage=1wp  last-50 mean=-421.27  success=0.06
+  [SAC] ep 100  stage=1wp  last-50 mean=-483.96  success=0.08
+  [SAC] ep 150  stage=1wp  last-50 mean=-555.74  success=0.04
+
+SAC done. Stage history: []
+Episodes: 163
+  [SAC (curriculum)] ep 1/10  return=-32.60
+  [SAC (curriculum)] ep 2/10  return=-99.26
+  [SAC (curriculum)] ep 3/10  return=52.06
+  [SAC (curriculum)] ep 4/10  return=-84.23
+  [SAC (curriculum)] ep 5/10  return=-102.64
+  [SAC (curriculum)] ep 6/10  return=-48.20
+  [SAC (curriculum)] ep 7/10  return=-31.02
+  [SAC (curriculum)] ep 8/10  return=-67.56
+  [SAC (curriculum)] ep 9/10  return=-169.05
+  [SAC (curriculum)] ep 10/10  return=-103.54
+  SAC (curriculum)      mean=  -68.60  std=  55.98
+wandb: WARNING Linked 1 file into the W&B run directory (hardlinks); call wandb.save again to sync new files.
+wandb:
+wandb: Run history:
+wandb: curriculum_stage ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:          episode ▁▁▁▁▁▂▂▂▂▂▃▃▃▃▃▃▄▄▄▅▅▅▅▅▅▆▆▆▇▇▇▇▇▇▇▇▇▇██
+wandb:   episode_return ▄▄▅█▄▅▇▆▆▄▃▄▅▁█▇▃▄▃▄▃▄▃▄▄▄▃█▃▃▄▃▃▄▄▄▄█▃▄
+wandb: eval_mean_return ▁
+wandb:  eval_std_return ▁
+wandb:     success_rate ▁▁▁█▅▃▃▃▃▃▄▅▅▅▄▄▄▄▅▅▆▇▇▇▇▇▇▇▅▅▅▅▆▆▅▄▄▄▂▄
+wandb:
+wandb: Run summary:
+wandb: curriculum_stage 1
+wandb:          episode 162
+wandb:   episode_return -598.37783
+wandb: eval_mean_return -68.60321
+wandb:  eval_std_return 55.98092
+wandb:     success_rate 0.04
+wandb:
+wandb:  View run SAC-curriculum-mode6 at: https://wandb.ai/info8003-rl-project/waypoints/runs/ng6n1k6f
+wandb:  View project at: https://wandb.ai/info8003-rl-project/waypoints
+wandb: Synced 5 W&B file(s), 1 media file(s), 0 artifact file(s) and 1 other file(s)
+wandb: Find logs at: .\wandb\run-20260518_032007-ng6n1k6f\logs
+SAC run closed.
+
+── PPO  flight_mode=6 ──────────────────────────
+
+wandb: Tracking run with wandb version 0.27.0
+wandb: Run data is saved locally in F:\ULiege\Data Science\RL\wandb\run-20260518_052240-9w8a8c1f
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run PPO-curriculum-mode6
+wandb:  View project at https://wandb.ai/info8003-rl-project/waypoints
+wandb:  View run at https://wandb.ai/info8003-rl-project/waypoints/runs/9w8a8c1f
+F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\common\on_policy_algorithm.py:150: UserWarning: You are trying to run PPO on the GPU, but it is primarily intended to run on the CPU when not using a CNN policy (you are using ActorCriticPolicy which should be a MlpPolicy). See https://github.com/DLR-RM/stable-baselines3/issues/1245 for more info. You can pass `device='cpu'` or `export CUDA_VISIBLE_DEVICES=` to force using the CPU.Note: The model will train, but the GPU utilization will be poor and the training might take longer than on CPU.
+  warnings.warn(
+
+Stage 1 — attempt 1/1 (125000 timesteps) ...
+  success_rate = 0.14  (threshold = 0.7)
+  → Advancing to 2 waypoints
+
+Stage 2 — attempt 1/1 (125000 timesteps) ...
+  success_rate = 0.04  (threshold = 0.7)
+  → Advancing to 3 waypoints
+
+Stage 3 — attempt 1/1 (125000 timesteps) ...
+  success_rate = 0.06  (threshold = 0.7)
+  → Advancing to 4 waypoints
+
+Stage 4 — attempt 1/1 (125000 timesteps) ...
+  success_rate = 0.18  (threshold = 0.7)
+
+PPO done. Total timesteps: 500,000
+wandb: WARNING Linked 1 file into the W&B run directory (hardlinks); call wandb.save again to sync new files.
+wandb:
+wandb: Run history:
+wandb:            attempt ▁▁▁▁
+wandb: curriculum_advance ▁▅█
+wandb:              stage ▁▃▆█
+wandb:       success_rate ▆▁▂█
+wandb:           total_ts ▁▁▃▃▆▆█
+wandb:
+wandb: Run summary:
+wandb:            attempt 1
+wandb: curriculum_advance 4
+wandb:              stage 4
+wandb:       success_rate 0.18
+wandb:           total_ts 500000
+wandb:
+wandb:  View run PPO-curriculum-mode6 at: https://wandb.ai/info8003-rl-project/waypoints/runs/9w8a8c1f
+wandb:  View project at: https://wandb.ai/info8003-rl-project/waypoints
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 1 other file(s)
+wandb: Find logs at: .\wandb\run-20260518_052240-9w8a8c1f\logs
+PPO run closed.
+  [PPO (curriculum)] ep 1/10  return=-3.15
+  [PPO (curriculum)] ep 2/10  return=-51.94
+  [PPO (curriculum)] ep 3/10  return=-64.21
+  [PPO (curriculum)] ep 4/10  return=-33.57
+  [PPO (curriculum)] ep 5/10  return=-7.87
+  [PPO (curriculum)] ep 6/10  return=-21.48
+  [PPO (curriculum)] ep 7/10  return=1.90
+  [PPO (curriculum)] ep 8/10  return=-71.94
+  [PPO (curriculum)] ep 9/10  return=-82.19
+  [PPO (curriculum)] ep 10/10  return=-74.81
+  PPO (curriculum)      mean=  -40.93  std=  30.43
+
+── Mode 6 summary ───────────────────────────────
+  SAC  mean=-68.60  std=55.98
+  PPO  mean=-40.93  std=30.43
+
+============================================================
+  FLIGHT MODE 4  (2/4)
+============================================================
+
+
+── SAC  flight_mode=4 ──────────────────────────
+
+wandb: Tracking run with wandb version 0.27.0
+wandb: Run data is saved locally in F:\ULiege\Data Science\RL\wandb\run-20260518_061315-vsl1ugvy
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run SAC-curriculum-mode4
+wandb:  View project at https://wandb.ai/info8003-rl-project/waypoints
+wandb:  View run at https://wandb.ai/info8003-rl-project/waypoints/runs/vsl1ugvy
+  [SAC] ep 50  stage=1wp  last-50 mean=-457.92  success=0.06
+  [SAC] ep 100  stage=1wp  last-50 mean=-529.17  success=0.02
+  [SAC] ep 150  stage=1wp  last-50 mean=-472.64  success=0.02
+
+SAC done. Stage history: []
+Episodes: 154
+  [SAC (curriculum)] ep 1/10  return=-84.58
+  [SAC (curriculum)] ep 2/10  return=-93.85
+  [SAC (curriculum)] ep 3/10  return=-96.63
+  [SAC (curriculum)] ep 4/10  return=-89.71
+  [SAC (curriculum)] ep 5/10  return=-90.96
+  [SAC (curriculum)] ep 6/10  return=-82.32
+  [SAC (curriculum)] ep 7/10  return=-7.01
+  [SAC (curriculum)] ep 8/10  return=-75.68
+  [SAC (curriculum)] ep 9/10  return=-84.67
+  [SAC (curriculum)] ep 10/10  return=-7.33
+  SAC (curriculum)      mean=  -71.27  std=  32.55
+wandb: WARNING Linked 1 file into the W&B run directory (hardlinks); call wandb.save again to sync new files.
+wandb:
+wandb: Run history:
+wandb: curriculum_stage ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:          episode ▁▁▁▁▂▂▂▃▃▃▃▃▄▄▄▄▄▄▄▄▅▅▅▅▅▅▆▆▆▆▆▆▆▆▇▇▇▇██
+wandb:   episode_return ▃▂█▄▅█▅▂▁▂▄▆▂▃▂▂▃▃▂▂▃█▃▃▄▅▂▂▂▃▂▃▂▃▃▂▇▃▂▃
+wandb: eval_mean_return ▁
+wandb:  eval_std_return ▁
+wandb:     success_rate ▁▁▁▁█▅▅▇▆▅▆▅▅▅▅▅▅▅▅▄▂▄▄▂▂▂▂▂▄▄▂▂▂▂▂▂▂▂▂▂
+wandb:
+wandb: Run summary:
+wandb: curriculum_stage 1
+wandb:          episode 153
+wandb:   episode_return -493.66242
+wandb: eval_mean_return -71.27487
+wandb:  eval_std_return 32.55091
+wandb:     success_rate 0.02
+wandb:
+wandb:  View run SAC-curriculum-mode4 at: https://wandb.ai/info8003-rl-project/waypoints/runs/vsl1ugvy
+wandb:  View project at: https://wandb.ai/info8003-rl-project/waypoints
+wandb: Synced 5 W&B file(s), 1 media file(s), 0 artifact file(s) and 1 other file(s)
+wandb: Find logs at: .\wandb\run-20260518_061315-vsl1ugvy\logs
+SAC run closed.
+
+── PPO  flight_mode=4 ──────────────────────────
+
+wandb: Tracking run with wandb version 0.27.0
+wandb: Run data is saved locally in F:\ULiege\Data Science\RL\wandb\run-20260518_080821-8y2cie9j
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run PPO-curriculum-mode4
+wandb:  View project at https://wandb.ai/info8003-rl-project/waypoints
+wandb:  View run at https://wandb.ai/info8003-rl-project/waypoints/runs/8y2cie9j
+
+Stage 1 — attempt 1/1 (125000 timesteps) ...
+  success_rate = 0.08  (threshold = 0.7)
+  → Advancing to 2 waypoints
+
+Stage 2 — attempt 1/1 (125000 timesteps) ...
+  success_rate = 0.06  (threshold = 0.7)
+  → Advancing to 3 waypoints
+
+Stage 3 — attempt 1/1 (125000 timesteps) ...
+  success_rate = 0.06  (threshold = 0.7)
+  → Advancing to 4 waypoints
+
+Stage 4 — attempt 1/1 (125000 timesteps) ...
+  success_rate = 0.08  (threshold = 0.7)
+
+PPO done. Total timesteps: 500,000
+wandb: WARNING Linked 1 file into the W&B run directory (hardlinks); call wandb.save again to sync new files.
+wandb:
+wandb: Run history:
+wandb:            attempt ▁▁▁▁
+wandb: curriculum_advance ▁▅█
+wandb:              stage ▁▃▆█
+wandb:       success_rate █▁▁█
+wandb:           total_ts ▁▁▃▃▆▆█
+wandb:
+wandb: Run summary:
+wandb:            attempt 1
+wandb: curriculum_advance 4
+wandb:              stage 4
+wandb:       success_rate 0.08
+wandb:           total_ts 500000
+wandb:
+wandb:  View run PPO-curriculum-mode4 at: https://wandb.ai/info8003-rl-project/waypoints/runs/8y2cie9j
+wandb:  View project at: https://wandb.ai/info8003-rl-project/waypoints
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 1 other file(s)
+wandb: Find logs at: .\wandb\run-20260518_080821-8y2cie9j\logs
+PPO run closed.
+  [PPO (curriculum)] ep 1/10  return=-53.49
+  [PPO (curriculum)] ep 2/10  return=-85.52
+  [PPO (curriculum)] ep 3/10  return=-78.50
+  [PPO (curriculum)] ep 4/10  return=-87.39
+  [PPO (curriculum)] ep 5/10  return=-89.60
+  [PPO (curriculum)] ep 6/10  return=-81.84
+  [PPO (curriculum)] ep 7/10  return=-49.30
+  [PPO (curriculum)] ep 8/10  return=-55.68
+  [PPO (curriculum)] ep 9/10  return=-56.75
+  [PPO (curriculum)] ep 10/10  return=-48.44
+  PPO (curriculum)      mean=  -68.65  std=  16.34
+
+── Mode 4 summary ───────────────────────────────
+  SAC  mean=-71.27  std=32.55
+  PPO  mean=-68.65  std=16.34
+
+============================================================
+  FLIGHT MODE 0  (3/4)
+============================================================
+
+
+── SAC  flight_mode=0 ──────────────────────────
+
+wandb: Tracking run with wandb version 0.27.0
+wandb: Run data is saved locally in F:\ULiege\Data Science\RL\wandb\run-20260518_085839-v53el0fd
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run SAC-curriculum-mode0
+wandb:  View project at https://wandb.ai/info8003-rl-project/waypoints
+wandb:  View run at https://wandb.ai/info8003-rl-project/waypoints/runs/v53el0fd
+  [SAC] ep 50  stage=1wp  last-50 mean=61.36  success=0.48
+  [ep 72] Curriculum → 2 waypoints
+Traceback (most recent call last):
+  File "F:\ULiege\Data Science\RL\waypoints_run.py", line 314, in <module>
+    sac.learn(
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\sac\sac.py", line 313, in learn
+    return super().learn(
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\common\off_policy_algorithm.py", line 335, in learn
+    rollout = self.collect_rollouts(
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\common\off_policy_algorithm.py", line 568, in collect_rollouts
+    new_obs, rewards, dones, infos = env.step(actions)
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\common\vec_env\base_vec_env.py", line 222, in step
+    return self.step_wait()
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\common\vec_env\dummy_vec_env.py", line 59, in step_wait
+    obs, self.buf_rews[env_idx], terminated, truncated, self.buf_infos[env_idx] = self.envs[env_idx].step(  # type: ignore[assignment]
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\common\monitor.py", line 93, in step
+    raise RuntimeError("Tried to step environment that needs reset")
+RuntimeError: Tried to step environment that needs reset
+Traceback (most recent call last):
+  File "F:\ULiege\Data Science\RL\waypoints_run.py", line 314, in <module>
+    sac.learn(
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\sac\sac.py", line 313, in learn
+    return super().learn(
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\common\off_policy_algorithm.py", line 335, in learn
+    rollout = self.collect_rollouts(
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\common\off_policy_algorithm.py", line 568, in collect_rollouts
+    new_obs, rewards, dones, infos = env.step(actions)
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\common\vec_env\base_vec_env.py", line 222, in step
+    return self.step_wait()
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\common\vec_env\dummy_vec_env.py", line 59, in step_wait
+    obs, self.buf_rews[env_idx], terminated, truncated, self.buf_infos[env_idx] = self.envs[env_idx].step(  # type: ignore[assignment]
+  File "F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\common\monitor.py", line 93, in step
+    raise RuntimeError("Tried to step environment that needs reset")
+RuntimeError: Tried to step environment that needs reset
+wandb:
+wandb: 🚀 View run SAC-curriculum-mode0 at: https://wandb.ai/info8003-rl-project/waypoints/runs/v53el0fd
+wandb: Find logs at: wandb\run-20260518_085839-v53el0fd\logs
+(rl) PS F:\ULiege\Data Science\RL> python .\waypoints_run.py
+pybullet build time: May  6 2026 12:18:53
+
+============================================================
+  FLIGHT MODE 0  (1/2)
+============================================================
+
+
+── SAC  flight_mode=0 ──────────────────────────
+
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from C:\Users\Megaport\_netrc.
+wandb: Currently logged in as: andreas-stistrup (info8003-rl-project) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.27.0
+wandb: Run data is saved locally in F:\ULiege\Data Science\RL\wandb\run-20260518_101420-hdniqzn1
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run SAC-curriculum-mode0
+wandb:  View project at https://wandb.ai/info8003-rl-project/waypoints
+wandb:  View run at https://wandb.ai/info8003-rl-project/waypoints/runs/hdniqzn1
+
+  [SAC] Stage 1/4 (125000 timesteps) ...
+  [SAC] ep 50  stage=1wp  last-50 mean=57.97
+  [SAC] ep 100  stage=1wp  last-50 mean=33.88
+  [SAC] ep 150  stage=1wp  last-50 mean=105.76
+  [SAC] ep 200  stage=1wp  last-50 mean=-32.57
+  [SAC] ep 250  stage=1wp  last-50 mean=59.13
+  [SAC] ep 300  stage=1wp  last-50 mean=143.08
+  [SAC] ep 350  stage=1wp  last-50 mean=86.69
+  [SAC] Stage 1 success_rate=0.60 (threshold=0.7)
+  [SAC] Curriculum done. Total ts: 125,000  Stage history: []
+  [SAC (curriculum)] ep 1/10  return=-86.22
+  [SAC (curriculum)] ep 2/10  return=-119.90
+  [SAC (curriculum)] ep 3/10  return=-12.01
+  [SAC (curriculum)] ep 4/10  return=-46.49
+  [SAC (curriculum)] ep 5/10  return=133.11
+  [SAC (curriculum)] ep 6/10  return=-11.26
+  [SAC (curriculum)] ep 7/10  return=142.11
+  [SAC (curriculum)] ep 8/10  return=5.07
+  [SAC (curriculum)] ep 9/10  return=-112.50
+  [SAC (curriculum)] ep 10/10  return=-102.25
+  SAC (curriculum)      mean=  -21.03  std=  89.93
+wandb: WARNING Linked 1 file into the W&B run directory (hardlinks); call wandb.save again to sync new files.
+wandb:
+wandb: Run history:
+wandb: curriculum_stage ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:          episode ▁▁▁▂▂▂▂▂▂▂▃▃▄▄▄▄▄▄▄▄▅▅▅▅▅▅▅▆▆▆▆▇▇▇▇▇████
+wandb:   episode_return ▁▂▂▃▂▃▃▂▆▂▃▂▂▃▂▄▄▄▃▅▂▁▂▁▂▅▂▃▂▃█▂▄▁▂▂▅▃▂▃
+wandb: eval_mean_return ▁
+wandb:  eval_std_return ▁
+wandb:            stage ▁
+wandb:     success_rate ▁
+wandb:         total_ts ▁▁
+wandb:
+wandb: Run summary:
+wandb: curriculum_stage 1
+wandb:          episode 382
+wandb:   episode_return -127.27271
+wandb: eval_mean_return -21.03396
+wandb:  eval_std_return 89.92591
+wandb:            stage 1
+wandb:     success_rate 0.6
+wandb:         total_ts 125000
+wandb:
+wandb:  View run SAC-curriculum-mode0 at: https://wandb.ai/info8003-rl-project/waypoints/runs/hdniqzn1
+wandb:  View project at: https://wandb.ai/info8003-rl-project/waypoints
+wandb: Synced 5 W&B file(s), 1 media file(s), 0 artifact file(s) and 1 other file(s)
+wandb: Find logs at: .\wandb\run-20260518_101420-hdniqzn1\logs
+SAC run closed.
+
+── PPO  flight_mode=0 ──────────────────────────
+
+wandb: Tracking run with wandb version 0.27.0
+wandb: Run data is saved locally in F:\ULiege\Data Science\RL\wandb\run-20260518_104313-yzucyxtg
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run PPO-curriculum-mode0
+wandb:  View project at https://wandb.ai/info8003-rl-project/waypoints
+wandb:  View run at https://wandb.ai/info8003-rl-project/waypoints/runs/yzucyxtg
+F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\common\on_policy_algorithm.py:150: UserWarning: You are trying to run PPO on the GPU, but it is primarily intended to run on the CPU when not using a CNN policy (you are using ActorCriticPolicy which should be a MlpPolicy). See https://github.com/DLR-RM/stable-baselines3/issues/1245 for more info. You can pass `device='cpu'` or `export CUDA_VISIBLE_DEVICES=` to force using the CPU.Note: The model will train, but the GPU utilization will be poor and the training might take longer than on CPU.
+  warnings.warn(
+
+  [PPO] Stage 1/4 (125000 timesteps) ...
+  [PPO] ep 50  stage=1wp  last-50 mean=-76.58
+  [PPO] ep 100  stage=1wp  last-50 mean=4.89
+  [PPO] ep 150  stage=1wp  last-50 mean=67.24
+  [PPO] ep 200  stage=1wp  last-50 mean=114.67
+  [PPO] ep 250  stage=1wp  last-50 mean=190.22
+  [PPO] ep 300  stage=1wp  last-50 mean=349.18
+  [PPO] Stage 1 success_rate=1.00 (threshold=0.7)
+  [PPO] → Advancing to 2 waypoints
+
+  [PPO] Stage 2/4 (125000 timesteps) ...
+  [PPO] ep 50  stage=2wp  last-50 mean=262.69
+  [PPO] ep 100  stage=2wp  last-50 mean=480.89
+  [PPO] ep 150  stage=2wp  last-50 mean=432.49
+  [PPO] Stage 2 success_rate=0.80 (threshold=0.7)
+  [PPO] → Advancing to 3 waypoints
+
+  [PPO] Stage 3/4 (125000 timesteps) ...
+  [PPO] ep 50  stage=3wp  last-50 mean=235.29
+  [PPO] ep 100  stage=3wp  last-50 mean=491.13
+  [PPO] ep 150  stage=3wp  last-50 mean=295.59
+  [PPO] Stage 3 success_rate=0.90 (threshold=0.7)
+  [PPO] → Advancing to 4 waypoints
+
+  [PPO] Stage 4/4 (125000 timesteps) ...
+  [PPO] ep 50  stage=4wp  last-50 mean=351.08
+  [PPO] ep 100  stage=4wp  last-50 mean=317.26
+  [PPO] ep 150  stage=4wp  last-50 mean=441.51
+  [PPO] Stage 4 success_rate=0.80 (threshold=0.7)
+  [PPO] Curriculum done. Total ts: 500,000  Stage history: [(125000, 2), (250000, 3), (375000, 4)]
+  [PPO (curriculum)] ep 1/10  return=111.76
+  [PPO (curriculum)] ep 2/10  return=-101.04
+  [PPO (curriculum)] ep 3/10  return=204.77
+  [PPO (curriculum)] ep 4/10  return=12.78
+  [PPO (curriculum)] ep 5/10  return=-101.02
+  [PPO (curriculum)] ep 6/10  return=557.30
+  [PPO (curriculum)] ep 7/10  return=822.21
+  [PPO (curriculum)] ep 8/10  return=139.96
+  [PPO (curriculum)] ep 9/10  return=3.51
+  [PPO (curriculum)] ep 10/10  return=-135.31
+  PPO (curriculum)      mean=  151.49  std= 294.96
+wandb: WARNING Linked 1 file into the W&B run directory (hardlinks); call wandb.save again to sync new files.
+wandb:
+wandb: Run history:
+wandb: curriculum_advance ▁▅█
+wandb:   curriculum_stage ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▃▃▃▃▃▃▃▃▃▆▆▆▆▆▆▆▆████████
+wandb:            episode ▁▁▁▁▁▃▄▄▄▄▅▆▇▇▇█▁▂▂▃▃▃▄▄▄▁▁▁▂▂▃▄▄▁▁▂▂▃▄▄
+wandb:     episode_return ▂▁▁▁▂▂▂▂▄▂▂▂▂▁▁▁▁▁▅▁▂▁▇█▂▁▁▃▁▁▃▃▁▂▂▂▂▂▂▂
+wandb:   eval_mean_return ▁
+wandb:    eval_std_return ▁
+wandb:              stage ▁▃▆█
+wandb:       success_rate █▁▄▁
+wandb:           total_ts ▁▁▃▃▆▆██
+wandb:
+wandb: Run summary:
+wandb: curriculum_advance 4
+wandb:   curriculum_stage 4
+wandb:            episode 174
+wandb:     episode_return 156.60255
+wandb:   eval_mean_return 151.49258
+wandb:    eval_std_return 294.96083
+wandb:              stage 4
+wandb:       success_rate 0.8
+wandb:           total_ts 500000
+wandb:
+wandb:  View run PPO-curriculum-mode0 at: https://wandb.ai/info8003-rl-project/waypoints/runs/yzucyxtg
+wandb:  View project at: https://wandb.ai/info8003-rl-project/waypoints
+wandb: Synced 5 W&B file(s), 1 media file(s), 0 artifact file(s) and 1 other file(s)
+wandb: Find logs at: .\wandb\run-20260518_104313-yzucyxtg\logs
+PPO run closed.
+
+── Mode 0 summary ───────────────────────────────
+  SAC  mean=-21.03  std=89.93  ts=125,000
+  PPO  mean=151.49  std=294.96  ts=500,000
+
+============================================================
+  FLIGHT MODE -1  (2/2)
+============================================================
+
+
+── SAC  flight_mode=-1 ──────────────────────────
+
+wandb: Tracking run with wandb version 0.27.0
+wandb: Run data is saved locally in F:\ULiege\Data Science\RL\wandb\run-20260518_112251-6fvidbtr
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run SAC-curriculum-mode-1
+wandb:  View project at https://wandb.ai/info8003-rl-project/waypoints
+wandb:  View run at https://wandb.ai/info8003-rl-project/waypoints/runs/6fvidbtr
+
+  [SAC] Stage 1/4 (125000 timesteps) ...
+  [SAC] ep 50  stage=1wp  last-50 mean=-172.32
+  [SAC] ep 100  stage=1wp  last-50 mean=-114.70
+  [SAC] ep 150  stage=1wp  last-50 mean=-115.72
+  [SAC] ep 200  stage=1wp  last-50 mean=-118.05
+  [SAC] ep 250  stage=1wp  last-50 mean=-118.51
+  [SAC] ep 300  stage=1wp  last-50 mean=-722.82
+  [SAC] ep 350  stage=1wp  last-50 mean=-467.46
+  [SAC] Stage 1 success_rate=0.10 (threshold=0.7)
+  [SAC] Curriculum done. Total ts: 125,000  Stage history: []
+  [SAC (curriculum)] ep 1/10  return=-118.41
+  [SAC (curriculum)] ep 2/10  return=-272.39
+  [SAC (curriculum)] ep 3/10  return=-573.36
+  [SAC (curriculum)] ep 4/10  return=-160.82
+  [SAC (curriculum)] ep 5/10  return=-165.51
+  [SAC (curriculum)] ep 6/10  return=-109.56
+  [SAC (curriculum)] ep 7/10  return=62.82
+  [SAC (curriculum)] ep 8/10  return=-119.88
+  [SAC (curriculum)] ep 9/10  return=-102.05
+  [SAC (curriculum)] ep 10/10  return=-113.39
+  SAC (curriculum)      mean= -167.25  std= 156.23
+wandb: WARNING Linked 1 file into the W&B run directory (hardlinks); call wandb.save again to sync new files.
+wandb:
+wandb: Run history:
+wandb: curriculum_stage ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:          episode ▁▁▁▁▁▂▂▂▂▂▃▃▄▄▄▄▄▅▅▅▅▅▅▆▆▆▆▆▆▆▆▇▇▇▇▇▇███
+wandb:   episode_return ▆▇█▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▄▇▇▁▇▇▂▇▂█▃▇▇▃▇▇▃▆▇▃
+wandb: eval_mean_return ▁
+wandb:  eval_std_return ▁
+wandb:            stage ▁
+wandb:     success_rate ▁
+wandb:         total_ts ▁▁
+wandb:
+wandb: Run summary:
+wandb: curriculum_stage 1
+wandb:          episode 360
+wandb:   episode_return 75.64868
+wandb: eval_mean_return -167.25318
+wandb:  eval_std_return 156.22531
+wandb:            stage 1
+wandb:     success_rate 0.1
+wandb:         total_ts 125000
+wandb:
+wandb:  View run SAC-curriculum-mode-1 at: https://wandb.ai/info8003-rl-project/waypoints/runs/6fvidbtr
+wandb:  View project at: https://wandb.ai/info8003-rl-project/waypoints
+wandb: Synced 5 W&B file(s), 1 media file(s), 0 artifact file(s) and 1 other file(s)
+wandb: Find logs at: .\wandb\run-20260518_112251-6fvidbtr\logs
+SAC run closed.
+
+── PPO  flight_mode=-1 ──────────────────────────
+
+wandb: Tracking run with wandb version 0.27.0
+wandb: Run data is saved locally in F:\ULiege\Data Science\RL\wandb\run-20260518_115105-on1pdazk
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run PPO-curriculum-mode-1
+wandb:  View project at https://wandb.ai/info8003-rl-project/waypoints
+wandb:  View run at https://wandb.ai/info8003-rl-project/waypoints/runs/on1pdazk
+
+  [PPO] Stage 1/4 (125000 timesteps) ...
+  [PPO] ep 50  stage=1wp  last-50 mean=-178.53
+  [PPO] ep 100  stage=1wp  last-50 mean=-161.26
+  [PPO] ep 150  stage=1wp  last-50 mean=-165.11
+  [PPO] ep 200  stage=1wp  last-50 mean=-187.13
+  [PPO] ep 250  stage=1wp  last-50 mean=-205.69
+  [PPO] ep 300  stage=1wp  last-50 mean=-236.06
+  [PPO] ep 350  stage=1wp  last-50 mean=-347.12
+  [PPO] ep 400  stage=1wp  last-50 mean=-292.58
+  [PPO] ep 450  stage=1wp  last-50 mean=-504.21
+  [PPO] ep 500  stage=1wp  last-50 mean=-505.44
+  [PPO] ep 550  stage=1wp  last-50 mean=-346.35
+  [PPO] ep 600  stage=1wp  last-50 mean=-315.44
+  [PPO] ep 650  stage=1wp  last-50 mean=-355.59
+  [PPO] ep 700  stage=1wp  last-50 mean=-193.87
+  [PPO] Stage 1 success_rate=0.10 (threshold=0.7)
+  [PPO] Curriculum done. Total ts: 125,000  Stage history: []
+  [PPO (curriculum)] ep 1/10  return=-109.98
+  [PPO (curriculum)] ep 2/10  return=-101.00
+  [PPO (curriculum)] ep 3/10  return=-145.89
+  [PPO (curriculum)] ep 4/10  return=-187.46
+  [PPO (curriculum)] ep 5/10  return=-113.67
+  [PPO (curriculum)] ep 6/10  return=-116.54
+  [PPO (curriculum)] ep 7/10  return=-96.31
+  [PPO (curriculum)] ep 8/10  return=-133.74
+  [PPO (curriculum)] ep 9/10  return=-107.03
+  [PPO (curriculum)] ep 10/10  return=-105.44
+  PPO (curriculum)      mean= -121.71  std=  26.14
+wandb: WARNING Linked 1 file into the W&B run directory (hardlinks); call wandb.save again to sync new files.
+wandb:
+wandb: Run history:
+wandb: curriculum_stage ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:          episode ▁▁▂▂▂▂▂▃▃▃▃▃▃▃▄▄▄▄▄▄▅▅▅▅▅▅▆▆▆▆▆▆▇▇▇▇▇▇▇█
+wandb:   episode_return ▅▅▆▅▆▅▅▆▅▅▅▅█▄▅▃▅▂▅▄▅▅▆▅▄█▅▄▁▁▃▅▁▃▅▅▅▆▆▅
+wandb: eval_mean_return ▁
+wandb:  eval_std_return ▁
+wandb:            stage ▁
+wandb:     success_rate ▁
+wandb:         total_ts ▁▁
+wandb:
+wandb: Run summary:
+wandb: curriculum_stage 1
+wandb:          episode 713
+wandb:   episode_return -2090.99094
+wandb: eval_mean_return -121.70564
+wandb:  eval_std_return 26.1444
+wandb:            stage 1
+wandb:     success_rate 0.1
+wandb:         total_ts 125000
+wandb:
+wandb:  View run PPO-curriculum-mode-1 at: https://wandb.ai/info8003-rl-project/waypoints/runs/on1pdazk
+wandb:  View project at: https://wandb.ai/info8003-rl-project/waypoints
+wandb: Synced 5 W&B file(s), 1 media file(s), 0 artifact file(s) and 1 other file(s)
+wandb: Find logs at: .\wandb\run-20260518_115105-on1pdazk\logs
+PPO run closed.
+
+── Mode -1 summary ───────────────────────────────
+  SAC  mean=-167.25  std=156.23  ts=125,000
+  PPO  mean=-121.71  std=26.14  ts=125,000
+
+============================================================
+  All flight modes done.
+============================================================
+(rl) PS F:\ULiege\Data Science\RL> python .\waypoints_run.py
+pybullet build time: May  6 2026 12:18:53
+
+============================================================
+  FLIGHT MODE 0  (1/2)
+============================================================
+
+
+── SAC  flight_mode=0 ──────────────────────────
+
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from C:\Users\Megaport\_netrc.
+wandb: Currently logged in as: andreas-stistrup (info8003-rl-project) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.27.0
+wandb: Run data is saved locally in F:\ULiege\Data Science\RL\wandb\run-20260518_122910-ghvr27yg
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run SAC-curriculum-mode0-250000
+wandb:  View project at https://wandb.ai/info8003-rl-project/waypoints
+wandb:  View run at https://wandb.ai/info8003-rl-project/waypoints/runs/ghvr27yg
+
+  [SAC] Stage 1/4 (250000 timesteps) ...
+  [SAC] ep 50  stage=1wp  last-50 mean=-21.65
+  [SAC] ep 100  stage=1wp  last-50 mean=27.04
+  [SAC] ep 150  stage=1wp  last-50 mean=-18.67
+  [SAC] ep 200  stage=1wp  last-50 mean=2.86
+  [SAC] ep 250  stage=1wp  last-50 mean=-13.31
+  [SAC] ep 300  stage=1wp  last-50 mean=33.81
+  [SAC] ep 350  stage=1wp  last-50 mean=53.63
+  [SAC] ep 400  stage=1wp  last-50 mean=23.36
+  [SAC] ep 600  stage=1wp  last-50 mean=164.86
+  [SAC] ep 650  stage=1wp  last-50 mean=171.41
+  [SAC] ep 700  stage=1wp  last-50 mean=173.72
+  [SAC] ep 750  stage=1wp  last-50 mean=169.87
+  [SAC] ep 800  stage=1wp  last-50 mean=202.46
+  [SAC] ep 850  stage=1wp  last-50 mean=214.88
+  [SAC] ep 900  stage=1wp  last-50 mean=214.49
+  [SAC] Stage 1 success_rate=0.80 (threshold=0.7)
+  [SAC] → Advancing to 2 waypoints
+
+  [SAC] Stage 2/4 (250000 timesteps) ...
+  [SAC] ep 50  stage=2wp  last-50 mean=258.18
+  [SAC] ep 100  stage=2wp  last-50 mean=239.04
+  [SAC] ep 150  stage=2wp  last-50 mean=134.76
+  [SAC] ep 200  stage=2wp  last-50 mean=76.84
+  [SAC] ep 250  stage=2wp  last-50 mean=277.31
+  [SAC] ep 300  stage=2wp  last-50 mean=236.66
+  [SAC] ep 350  stage=2wp  last-50 mean=151.94
+  [SAC] Stage 2 success_rate=0.60 (threshold=0.7)
+  [SAC] Curriculum done. Total ts: 500,000  Stage history: [(250000, 2)]
+  [SAC (curriculum)] ep 1/10  return=-108.95
+  [SAC (curriculum)] ep 2/10  return=-125.68
+  [SAC (curriculum)] ep 3/10  return=-68.42
+  [SAC (curriculum)] ep 4/10  return=-95.82
+  [SAC (curriculum)] ep 5/10  return=-91.14
+  [SAC (curriculum)] ep 6/10  return=-68.60
+  [SAC (curriculum)] ep 7/10  return=137.89
+  [SAC (curriculum)] ep 8/10  return=-101.74
+  [SAC (curriculum)] ep 9/10  return=-100.30
+  [SAC (curriculum)] ep 10/10  return=-116.67
+  SAC (curriculum)      mean=  -73.94  std=  72.73
+wandb: WARNING Linked 1 file into the W&B run directory (hardlinks); call wandb.save again to sync new files.
+wandb:
+wandb: Run history:
+wandb: curriculum_advance ▁
+wandb:   curriculum_stage ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁██████████
+wandb:            episode ▁▁▁▁▂▂▂▂▃▃▄▄▄▄▅▅▅▆▆▇██████▁▁▁▁▂▂▂▂▂▃▃▃▃▃
+wandb:     episode_return ▂▂▃▃▂▃▂▂▂▂▂▄▂▃▂█▂▃▄▃▃▃▂▅▅▃▃▄▆▁▂▂▃▂▃▆▃▃▅▂
+wandb:   eval_mean_return ▁
+wandb:    eval_std_return ▁
+wandb:              stage ▁█
+wandb:       success_rate █▁
+wandb:           total_ts ▁▁██
+wandb:
+wandb: Run summary:
+wandb: curriculum_advance 2
+wandb:   curriculum_stage 2
+wandb:            episode 381
+wandb:     episode_return -5.00227
+wandb:   eval_mean_return -73.94274
+wandb:    eval_std_return 72.73219
+wandb:              stage 2
+wandb:       success_rate 0.6
+wandb:           total_ts 500000
+wandb:
+wandb:  View run SAC-curriculum-mode0-250000 at: https://wandb.ai/info8003-rl-project/waypoints/runs/ghvr27yg
+wandb:  View project at: https://wandb.ai/info8003-rl-project/waypoints
+wandb: Synced 5 W&B file(s), 1 media file(s), 0 artifact file(s) and 1 other file(s)
+wandb: Find logs at: .\wandb\run-20260518_122910-ghvr27yg\logs
+SAC run closed.
+
+── PPO  flight_mode=0 ──────────────────────────
+
+wandb: Tracking run with wandb version 0.27.0
+wandb: Run data is saved locally in F:\ULiege\Data Science\RL\wandb\run-20260518_142805-jnxb1xq5
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run PPO-curriculum-mode0-250000
+wandb:  View project at https://wandb.ai/info8003-rl-project/waypoints
+wandb:  View run at https://wandb.ai/info8003-rl-project/waypoints/runs/jnxb1xq5
+F:\Dev\anaconda\envs\rl\lib\site-packages\stable_baselines3\common\on_policy_algorithm.py:150: UserWarning: You are trying to run PPO on the GPU, but it is primarily intended to run on the CPU when not using a CNN policy (you are using ActorCriticPolicy which should be a MlpPolicy). See https://github.com/DLR-RM/stable-baselines3/issues/1245 for more info. You can pass `device='cpu'` or `export CUDA_VISIBLE_DEVICES=` to force using the CPU.Note: The model will train, but the GPU utilization will be poor and the training might take longer than on CPU.
+  warnings.warn(
+
+  [PPO] Stage 1/4 (250000 timesteps) ...
+  [PPO] ep 50  stage=1wp  last-50 mean=-39.56
+  [PPO] ep 100  stage=1wp  last-50 mean=42.90
+  [PPO] ep 150  stage=1wp  last-50 mean=103.17
+  [PPO] ep 200  stage=1wp  last-50 mean=288.06
+  [PPO] ep 250  stage=1wp  last-50 mean=343.03
+  [PPO] ep 300  stage=1wp  last-50 mean=272.50
+  [PPO] ep 350  stage=1wp  last-50 mean=337.56
+  [PPO] ep 400  stage=1wp  last-50 mean=336.74
+  [PPO] ep 450  stage=1wp  last-50 mean=376.25
+  [PPO] Stage 1 success_rate=0.90 (threshold=0.7)
+  [PPO] → Advancing to 2 waypoints
+
+  [PPO] Stage 2/4 (250000 timesteps) ...
+  [PPO] ep 50  stage=2wp  last-50 mean=283.97
+  [PPO] ep 100  stage=2wp  last-50 mean=450.05
+  [PPO] ep 150  stage=2wp  last-50 mean=339.37
+  [PPO] ep 200  stage=2wp  last-50 mean=374.00
+  [PPO] ep 250  stage=2wp  last-50 mean=500.23
+  [PPO] ep 300  stage=2wp  last-50 mean=440.54
+  [PPO] Stage 2 success_rate=0.50 (threshold=0.7)
+  [PPO] Curriculum done. Total ts: 500,000  Stage history: [(250000, 2)]
+  [PPO (curriculum)] ep 1/10  return=-85.82
+  [PPO (curriculum)] ep 2/10  return=-257.63
+  [PPO (curriculum)] ep 3/10  return=36.96
+  [PPO (curriculum)] ep 4/10  return=31.15
+  [PPO (curriculum)] ep 5/10  return=47.76
+  [PPO (curriculum)] ep 6/10  return=73.46
+  [PPO (curriculum)] ep 7/10  return=284.37
+  [PPO (curriculum)] ep 8/10  return=-100.90
+  [PPO (curriculum)] ep 9/10  return=-101.07
+  [PPO (curriculum)] ep 10/10  return=-104.85
+  PPO (curriculum)      mean=  -17.66  std= 138.88
+wandb: WARNING Linked 1 file into the W&B run directory (hardlinks); call wandb.save again to sync new files.
+wandb:
+wandb: Run history:
+wandb: curriculum_advance ▁
+wandb:   curriculum_stage ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁████████████████
+wandb:            episode ▁▁▁▁▁▁▂▃▃▃▃▃▃▃▄▄▄▅▅▅▇▇▇▇███▁▁▁▂▃▃▃▃▄▄▄▅▆
+wandb:     episode_return ▂▂▂▁▁▂▁▂▁▂▄▂▂▃▂▂▂▂▂▇▄▆▁▁▂▇▃▇▂▁▁▂▃▄▅▄█▇▃▄
+wandb:   eval_mean_return ▁
+wandb:    eval_std_return ▁
+wandb:              stage ▁█
+wandb:       success_rate █▁
+wandb:           total_ts ▁▁██
+wandb:
+wandb: Run summary:
+wandb: curriculum_advance 2
+wandb:   curriculum_stage 2
+wandb:            episode 337
+wandb:     episode_return 700.65911
+wandb:   eval_mean_return -17.65673
+wandb:    eval_std_return 138.88467
+wandb:              stage 2
+wandb:       success_rate 0.5
+wandb:           total_ts 500000
+wandb:
+wandb:  View run PPO-curriculum-mode0-250000 at: https://wandb.ai/info8003-rl-project/waypoints/runs/jnxb1xq5
+wandb:  View project at: https://wandb.ai/info8003-rl-project/waypoints
+wandb: Synced 5 W&B file(s), 1 media file(s), 0 artifact file(s) and 1 other file(s)
+wandb: Find logs at: .\wandb\run-20260518_142805-jnxb1xq5\logs
+PPO run closed.
+
+── Mode 0 summary ───────────────────────────────
+  SAC  mean=-73.94  std=72.73  ts=500,000
+  PPO  mean=-17.66  std=138.88  ts=500,000
+
+============================================================
+  FLIGHT MODE -1  (2/2)
+============================================================
+
+
+── SAC  flight_mode=-1 ──────────────────────────
+
+wandb: Tracking run with wandb version 0.27.0
+wandb: Run data is saved locally in F:\ULiege\Data Science\RL\wandb\run-20260518_150639-9df2lpvj
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run SAC-curriculum-mode-1-250000
+wandb:  View project at https://wandb.ai/info8003-rl-project/waypoints
+wandb:  View run at https://wandb.ai/info8003-rl-project/waypoints/runs/9df2lpvj
+
+  [SAC] Stage 1/4 (250000 timesteps) ...
+  [SAC] ep 50  stage=1wp  last-50 mean=-158.73
+  [SAC] ep 100  stage=1wp  last-50 mean=-181.17
+  [SAC] ep 150  stage=1wp  last-50 mean=-201.10
+  [SAC] ep 200  stage=1wp  last-50 mean=-590.64
+  [SAC] ep 250  stage=1wp  last-50 mean=-693.68
+  [SAC] ep 300  stage=1wp  last-50 mean=-357.89
+  [SAC] ep 350  stage=1wp  last-50 mean=-230.23
+  [SAC] ep 400  stage=1wp  last-50 mean=-228.82
+  [SAC] ep 450  stage=1wp  last-50 mean=-54.15
+  [SAC] Stage 1 success_rate=0.80 (threshold=0.7)
+  [SAC] → Advancing to 2 waypoints
+
+  [SAC] Stage 2/4 (250000 timesteps) ...
+  [SAC] ep 50  stage=2wp  last-50 mean=-104.87
+  [SAC] ep 100  stage=2wp  last-50 mean=-330.22
+  [SAC] ep 150  stage=2wp  last-50 mean=-660.61
+  [SAC] ep 200  stage=2wp  last-50 mean=-421.80
+  [SAC] ep 250  stage=2wp  last-50 mean=-521.13
+  [SAC] ep 300  stage=2wp  last-50 mean=-395.50
+  [SAC] ep 350  stage=2wp  last-50 mean=-233.50
+  [SAC] ep 400  stage=2wp  last-50 mean=-289.56
+  [SAC] ep 450  stage=2wp  last-50 mean=-211.36
+  [SAC] ep 500  stage=2wp  last-50 mean=-297.87
+  [SAC] ep 550  stage=2wp  last-50 mean=-209.75
+  [SAC] ep 600  stage=2wp  last-50 mean=-220.99
+  [SAC] ep 650  stage=2wp  last-50 mean=-355.13
+  [SAC] ep 700  stage=2wp  last-50 mean=-220.62
+  [SAC] ep 750  stage=2wp  last-50 mean=-198.58
+  [SAC] ep 800  stage=2wp  last-50 mean=-221.59
+  [SAC] ep 850  stage=2wp  last-50 mean=-205.64
+  [SAC] Stage 2 success_rate=0.00 (threshold=0.7)
+  [SAC] Curriculum done. Total ts: 500,000  Stage history: [(250000, 2)]
+  [SAC (curriculum)] ep 1/10  return=-100.70
+  [SAC (curriculum)] ep 2/10  return=-115.33
+  [SAC (curriculum)] ep 3/10  return=-118.30
+  [SAC (curriculum)] ep 4/10  return=-114.42
+  [SAC (curriculum)] ep 5/10  return=-102.27
+  [SAC (curriculum)] ep 6/10  return=-141.92
+  [SAC (curriculum)] ep 7/10  return=-101.51
+  [SAC (curriculum)] ep 8/10  return=-140.51
+  [SAC (curriculum)] ep 9/10  return=-159.78
+  [SAC (curriculum)] ep 10/10  return=-102.00
+  SAC (curriculum)      mean= -119.67  std=  19.72
+wandb: WARNING Linked 1 file into the W&B run directory (hardlinks); call wandb.save again to sync new files.
+wandb:
+wandb: Run history:
+wandb: curriculum_advance ▁
+wandb:   curriculum_stage ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁█████████████████████████
+wandb:            episode ▁▁▂▂▂▃▃▃▃▄▄▄▄▄▁▂▂▂▂▂▃▃▃▃▄▄▄▄▄▄▅▆▆▆▆▇▇███
+wandb:     episode_return ▇▇▇▇▁▇██▅▇█▇▇█▅██▇▇█▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇
+wandb:   eval_mean_return ▁
+wandb:    eval_std_return ▁
+wandb:              stage ▁█
+wandb:       success_rate █▁
+wandb:           total_ts ▁▁██
+wandb:
+wandb: Run summary:
+wandb: curriculum_advance 2
+wandb:   curriculum_stage 2
+wandb:            episode 879
+wandb:     episode_return -106.99459
+wandb:   eval_mean_return -119.67163
+wandb:    eval_std_return 19.72483
+wandb:              stage 2
+wandb:       success_rate 0
+wandb:           total_ts 500000
+wandb:
+wandb:  View run SAC-curriculum-mode-1-250000 at: https://wandb.ai/info8003-rl-project/waypoints/runs/9df2lpvj
+wandb:  View project at: https://wandb.ai/info8003-rl-project/waypoints
+wandb: Synced 5 W&B file(s), 1 media file(s), 0 artifact file(s) and 1 other file(s)
+wandb: Find logs at: .\wandb\run-20260518_150639-9df2lpvj\logs
+SAC run closed.
+
+── PPO  flight_mode=-1 ──────────────────────────
+
+wandb: Tracking run with wandb version 0.27.0
+wandb: Run data is saved locally in F:\ULiege\Data Science\RL\wandb\run-20260518_165801-a3dfeu80
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run PPO-curriculum-mode-1-250000
+wandb:  View project at https://wandb.ai/info8003-rl-project/waypoints
+wandb:  View run at https://wandb.ai/info8003-rl-project/waypoints/runs/a3dfeu80
+
+  [PPO] Stage 1/4 (250000 timesteps) ...
+  [PPO] ep 50  stage=1wp  last-50 mean=-177.87
+  [PPO] ep 100  stage=1wp  last-50 mean=-156.17
+  [PPO] ep 150  stage=1wp  last-50 mean=-179.43
+  [PPO] ep 200  stage=1wp  last-50 mean=-155.22
+  [PPO] ep 250  stage=1wp  last-50 mean=-174.94
+  [PPO] ep 300  stage=1wp  last-50 mean=-196.66
+  [PPO] ep 350  stage=1wp  last-50 mean=-252.51
+  [PPO] ep 400  stage=1wp  last-50 mean=-265.18
+  [PPO] ep 450  stage=1wp  last-50 mean=-298.20
+  [PPO] ep 500  stage=1wp  last-50 mean=-298.55
+  [PPO] ep 550  stage=1wp  last-50 mean=-293.04
+  [PPO] ep 600  stage=1wp  last-50 mean=-221.90
+  [PPO] ep 650  stage=1wp  last-50 mean=-147.99
+  [PPO] ep 700  stage=1wp  last-50 mean=-253.74
+  [PPO] ep 1050  stage=1wp  last-50 mean=-163.33
+  [PPO] ep 1100  stage=1wp  last-50 mean=-179.55
+  [PPO] ep 1150  stage=1wp  last-50 mean=-189.75
+  [PPO] ep 1200  stage=1wp  last-50 mean=-150.33
+  [PPO] ep 1250  stage=1wp  last-50 mean=-146.41
+  [PPO] ep 1300  stage=1wp  last-50 mean=-173.79
+  [PPO] ep 1350  stage=1wp  last-50 mean=-162.47
+  [PPO] ep 1400  stage=1wp  last-50 mean=-114.78
+  [PPO] ep 1450  stage=1wp  last-50 mean=-196.65
+  [PPO] ep 1500  stage=1wp  last-50 mean=-139.21
+  [PPO] ep 1550  stage=1wp  last-50 mean=-133.30
+  [PPO] ep 1600  stage=1wp  last-50 mean=-109.76
+  [PPO] ep 1650  stage=1wp  last-50 mean=-123.96
+  [PPO] ep 1700  stage=1wp  last-50 mean=-106.83
+  [PPO] ep 1750  stage=1wp  last-50 mean=-109.57
+  [PPO] Stage 1 success_rate=0.10 (threshold=0.7)
+  [PPO] Curriculum done. Total ts: 250,000  Stage history: []
+  [PPO (curriculum)] ep 1/10  return=-110.90
+  [PPO (curriculum)] ep 2/10  return=-104.08
+  [PPO (curriculum)] ep 3/10  return=-109.47
+  [PPO (curriculum)] ep 4/10  return=-150.88
+  [PPO (curriculum)] ep 5/10  return=-100.98
+  [PPO (curriculum)] ep 6/10  return=-114.65
+  [PPO (curriculum)] ep 7/10  return=-100.34
+  [PPO (curriculum)] ep 8/10  return=-130.83
+  [PPO (curriculum)] ep 9/10  return=-152.32
+  [PPO (curriculum)] ep 10/10  return=-100.96
+  PPO (curriculum)      mean= -117.54  std=  19.08
+wandb: WARNING Linked 1 file into the W&B run directory (hardlinks); call wandb.save again to sync new files.
+wandb:
+wandb: Run history:
+wandb: curriculum_stage ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:          episode ▁▁▁▁▂▂▂▃▃▃▃▃▃▃▃▄▄▄▄▄▄▅▅▅▅▆▆▆▇▇▇▇▇▇▇█████
+wandb:   episode_return ▅▅▅▄▅▃▅▅▂▄▁▅▆▄▅▃▅▃▆▅▅▅▄▅▅▅▆▆▅▆▄▆▅▅█▅▆▅▆▆
+wandb: eval_mean_return ▁
+wandb:  eval_std_return ▁
+wandb:            stage ▁
+wandb:     success_rate ▁
+wandb:         total_ts ▁▁
+wandb:
+wandb: Run summary:
+wandb: curriculum_stage 1
+wandb:          episode 1770
+wandb:   episode_return -91.7321
+wandb: eval_mean_return -117.54066
+wandb:  eval_std_return 19.08231
+wandb:            stage 1
+wandb:     success_rate 0.1
+wandb:         total_ts 250000
+wandb:
+wandb:  View run PPO-curriculum-mode-1-250000 at: https://wandb.ai/info8003-rl-project/waypoints/runs/a3dfeu80
+wandb:  View project at: https://wandb.ai/info8003-rl-project/waypoints
+wandb: Synced 5 W&B file(s), 1 media file(s), 0 artifact file(s) and 1 other file(s)
+wandb: Find logs at: .\wandb\run-20260518_165801-a3dfeu80\logs
+PPO run closed.
+
+── Mode -1 summary ───────────────────────────────
+  SAC  mean=-119.67  std=19.72  ts=500,000
+  PPO  mean=-117.54  std=19.08  ts=250,000
+
+============================================================
+  All flight modes done.
+============================================================
