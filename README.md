@@ -13,6 +13,7 @@ All runs are logged to [WandB](https://wandb.ai/info8003-rl-project).
 ├── hover_run.py          # Hover experiment (SAC + PPO, 5 flight modes)
 ├── waypoints_run.py      # Waypoints curriculum experiment (SAC + PPO, 5 flight modes)
 ├── dogfight_run.py       # Dogfight self-play experiment (SAC + PPO)
+├── resave_checkpoints.py # Loads and saves models to ensure compatibility
 ├── env_probing.ipynb     # Environment exploration & MDP formalization
 ├── scripts/              # Course given scripts
 ├── checkpoints/          # Saved .zip model files (created at runtime)
