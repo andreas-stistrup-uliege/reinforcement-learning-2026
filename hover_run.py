@@ -1,27 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# # 3a. Experiments — QuadX-Hover-v4
-# 
-# This notebook trains and compares three policies on `PyFlyt/QuadX-Hover-v4`:
-# 
-# | Agent | Type | Library |
-# |---|---|---|
-# | **Random** | Baseline | — |
-# | **SAC** | Off-policy, entropy-regularised | Stable-Baselines3 |
-# | **PPO** | On-policy, clipped surrogate | Stable-Baselines3 |
-# 
-# Both SAC and PPO use SB3, so checkpoints save as `.zip` and are directly compatible with `evaluate.py` and the tournament submission format.
-# 
-# Change `flight_mode` in Section 0 to run any control mode (`-1, 0, 4, 6, 7`).
-
-# ## 0. Imports & config
-# 
-# > **To change flight mode:** set `flight_mode` below. Checkpoint names and WandB run names update automatically.
-
-# In[1]:
-
-
 import numpy as np
 import gymnasium as gym
 import PyFlyt.gym_envs
@@ -31,34 +7,33 @@ from stable_baselines3 import SAC, PPO
 from stable_baselines3.common.callbacks import BaseCallback
 from wandb.integration.sb3 import WandbCallback
 
-
 FLIGHT_MODES = [7, 6, 4, 0, -1]
 
 for flight_mode in FLIGHT_MODES:
 
-    # ── reproducibility ──────────────────────────────────────────
+    # -- reproducibility ------------------------------------------
     SEED = 42
     np.random.seed(SEED)
 
-    # ── environment ───────────────────────────────────────────────
+    # -- environment ----------------------------------------------
     ENV_ID      = "PyFlyt/QuadX-Hover-v4"
 
-    # ── eval config ──────────────────────────────────────────────
+    # -- eval config ----------------------------------------------
     MAX_STEPS  = 500
     EVAL_EPS   = 10
     EVAL_SEEDS = list(range(SEED, SEED + EVAL_EPS))
 
-    # ── SAC hyperparameters ───────────────────────────────────────
-    SAC_TOTAL_TIMESTEPS = 150_000   # ~300 episodes × 500 steps
+    # -- SAC hyperparameters --------------------------------------
+    SAC_TOTAL_TIMESTEPS = 150_000
     SAC_BATCH_SIZE      = 256
     SAC_GAMMA           = 0.99
     SAC_TAU             = 0.005
-    SAC_ALPHA           = 0.2       # ent_coef; set 'auto' for automatic tuning
+    SAC_ALPHA           = 0.2
     SAC_LR              = 3e-4
     SAC_BUFFER          = 500_000
-    SAC_LEARNING_STARTS = 1_000     # random steps before first gradient update
+    SAC_LEARNING_STARTS = 1_000
 
-    # ── PPO hyperparameters ───────────────────────────────────────
+    # -- PPO hyperparameters --------------------------------------
     PPO_TIMESTEPS = 150_000
     PPO_N_STEPS   = 2048
     PPO_BATCH     = 64
@@ -68,7 +43,7 @@ for flight_mode in FLIGHT_MODES:
     PPO_CLIP      = 0.2
     PPO_LR        = 3e-4
 
-    # ── WandB ─────────────────────────────────────────────────────
+    # -- WandB -----------------------------------------------------
     WANDB_PROJECT = "hover"
 
     shared_config = {
@@ -79,12 +54,6 @@ for flight_mode in FLIGHT_MODES:
     }
 
     print(f"Environment : {ENV_ID}  |  flight_mode = {flight_mode}")
-
-
-    # ## 1. Evaluation helper
-
-    # In[2]:
-
 
     def eval_agent(policy_fn, label, n_episodes=EVAL_EPS, seeds=EVAL_SEEDS, max_steps=MAX_STEPS):
         """
@@ -112,11 +81,6 @@ for flight_mode in FLIGHT_MODES:
         return mean, std, returns
 
 
-    # ## 2. Random baseline
-
-    # In[3]:
-
-
     _env_tmp      = gym.make(ENV_ID, flight_mode=flight_mode)
     _action_space = _env_tmp.action_space
     _env_tmp.close()
@@ -124,25 +88,6 @@ for flight_mode in FLIGHT_MODES:
     rand_mean, rand_std, rand_returns = eval_agent(
         lambda obs: _action_space.sample(), "Random"
     )
-
-
-    # ## 3. SAC — Soft Actor-Critic
-    # 
-    # ### 3.1 What SAC does
-    # 
-    # SAC maximises a **maximum-entropy** objective:
-    # 
-    # $$J(\pi) = \sum_t \mathbb{E}_{(s_t,a_t)\sim\pi}\bigl[r(s_t,a_t) + \alpha\,\mathcal{H}(\pi(\cdot|s_t))\bigr]$$
-    # 
-    # Key properties:
-    # - **Off-policy** — replay buffer lets every transition be reused across many gradient updates
-    # - **Actor**: squashed-Gaussian, actions always in `(-1, 1)` then rescaled to env bounds
-    # - **Two critics** with soft-updated targets → reduces Q-value overestimation
-    # - **`ent_coef`** (`α`) controls the exploration-exploitation trade-off; `'auto'` tunes it automatically
-    # 
-    # ### 3.2 WandB run — SAC
-
-    # In[ ]:
 
 
     wandb.init(
@@ -163,14 +108,6 @@ for flight_mode in FLIGHT_MODES:
     )
     print(f"WandB SAC run : {wandb.run.name}  ({wandb.run.url})")
 
-
-    # ### 3.3 Episode-return callback
-    # 
-    # SB3's `WandbCallback` logs timestep-level metrics. This small callback also logs the return at the end of each episode so we can plot a training curve.
-
-    # In[ ]:
-
-
     class EpisodeReturnCallback(BaseCallback):
         """Collects per-episode returns and logs them to WandB."""
 
@@ -188,11 +125,6 @@ for flight_mode in FLIGHT_MODES:
                         "episode"       : len(self.episode_returns),
                     })
             return True
-
-
-    # ### 3.4 Training
-
-    # In[ ]:
 
 
     env_sac = gym.make(ENV_ID, flight_mode=flight_mode)
@@ -225,11 +157,6 @@ for flight_mode in FLIGHT_MODES:
         f"Last-10 mean: {np.mean(sac_train_returns[-10:]):.2f}")
 
 
-    # ### 3.5 Training curve
-
-    # In[ ]:
-
-
     def smooth(x, w=20):
         return np.convolve(x, np.ones(w) / w, mode='valid')
 
@@ -246,11 +173,6 @@ for flight_mode in FLIGHT_MODES:
     plt.tight_layout()
     wandb.log({"training_curve": wandb.Image(fig)})
     plt.show()
-
-
-    # ### 3.6 Evaluate SAC & close run
-
-    # In[ ]:
 
 
     sac_mean, sac_std, sac_returns = eval_agent(
@@ -270,24 +192,6 @@ for flight_mode in FLIGHT_MODES:
     print("SAC run closed.")
 
 
-    # ## 4. PPO — Proximal Policy Optimisation
-    # 
-    # ### 4.1 What PPO does
-    # 
-    # PPO is **on-policy** and maximises the clipped surrogate objective:
-    # 
-    # $$L^{\text{CLIP}}(\theta) = \mathbb{E}_t\Bigl[\min\bigl(r_t(\theta)\hat{A}_t,\; \text{clip}(r_t(\theta), 1-\varepsilon, 1+\varepsilon)\hat{A}_t\bigr)\Bigr]$$
-    # 
-    # Key properties vs SAC:
-    # - **On-policy** — data is discarded after each update; less sample-efficient but no off-policy bias
-    # - **No replay buffer** — simpler memory footprint
-    # - **Stable by design** — clip prevents destructively large policy updates
-    # 
-    # ### 4.2 WandB run — PPO
-
-    # In[ ]:
-
-
     wandb.init(
         project = WANDB_PROJECT,
         name    = f"PPO-mode{flight_mode}",
@@ -305,11 +209,6 @@ for flight_mode in FLIGHT_MODES:
         }
     )
     print(f"WandB PPO run : {wandb.run.name}  ({wandb.run.url})")
-
-
-    # ### 4.3 Training
-
-    # In[ ]:
 
 
     env_ppo = gym.make(ENV_ID, flight_mode=flight_mode)
@@ -336,11 +235,6 @@ for flight_mode in FLIGHT_MODES:
     print("PPO training done.")
 
 
-    # ### 4.4 Evaluate PPO & close run
-
-    # In[ ]:
-
-
     ppo_mean, ppo_std, ppo_returns = eval_agent(
         lambda obs: ppo.predict(obs, deterministic=True)[0], "PPO"
     )
@@ -355,11 +249,6 @@ for flight_mode in FLIGHT_MODES:
     print("PPO run closed.")
 
 
-    # ## 5. Results summary
-
-    # In[ ]:
-
-
     print(f"{'Agent':<12} {'Mean return':>14} {'Std':>10} {'95% CI':>22}")
     print("-" * 62)
     for label, mean, std, rets in [
@@ -372,9 +261,6 @@ for flight_mode in FLIGHT_MODES:
         ci_lo = mean - 1.96 * se
         ci_hi = mean + 1.96 * se
         print(f"{label:<12} {mean:>14.2f} {std:>10.2f}  [{ci_lo:9.2f}, {ci_hi:9.2f}]")
-
-
-    # In[ ]:
 
 
     labels = ["Random", "SAC", "PPO"]
@@ -411,9 +297,6 @@ for flight_mode in FLIGHT_MODES:
     plt.show()
 
 
-    # In[ ]:
-
-
     fig, ax = plt.subplots(figsize=(10, 4))
     ax.plot(sac_train_returns, alpha=0.2, color='steelblue')
     ax.plot(smooth(sac_train_returns), color='steelblue', lw=2, label='SAC (smoothed)')
@@ -425,13 +308,6 @@ for flight_mode in FLIGHT_MODES:
     ax.legend()
     plt.tight_layout()
     plt.show()
-
-
-    # ## 6. Reload & verify
-    # 
-    # Both checkpoints are SB3 `.zip` files — compatible with `evaluate.py` directly.
-
-    # In[ ]:
 
 
     env_reload = gym.make(ENV_ID, flight_mode=flight_mode)
@@ -453,16 +329,8 @@ for flight_mode in FLIGHT_MODES:
     print(f"  PPO  original={ppo_mean:.2f}  reloaded={ppo_rl_mean:.2f}")
 
 
-    # ## 7. Run with evaluate.py
-    # 
-    # Both checkpoints can be evaluated directly with the teacher's script — no wrapper needed:
-
-    # In[ ]:
-
-
     print("Run from the terminal:")
     print(f"  python scripts/evaluate.py --model checkpoints/sac_hover_mode{flight_mode}.zip "
         f"--env hover --flight_mode {flight_mode}")
     print(f"  python scripts/evaluate.py --model checkpoints/ppo_hover_mode{flight_mode}.zip "
         f"--env hover --flight_mode {flight_mode}")
-

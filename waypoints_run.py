@@ -1,18 +1,3 @@
-"""
-waypoints_run.py — overnight training script for QuadX-Waypoints-v4.
- 
-Both SAC and PPO use Stable-Baselines3.
-Both use an identical curriculum structure:
-  - Train for TIMESTEPS_PER_STAGE steps on stage N
-  - Probe success rate over 10 episodes
-  - If threshold met → advance to stage N+1 and stop early
-  - If not → stop (no retries, strict budget)
- 
-Run:
-    python waypoints_run.py
-    python waypoints_run.py > logs/waypoints.txt 2>&1
-"""
- 
 import os
 import numpy as np
 import gymnasium as gym
@@ -28,14 +13,14 @@ from wandb.integration.sb3 import WandbCallback
  
 from scripts.wrappers import FlattenWaypointEnv
  
-# ── reproducibility ───────────────────────────────────────────
+# -- reproducibility -------------------------------------------
 SEED = 42
 np.random.seed(SEED)
  
-# ── flight modes to train ─────────────────────────────────────
-MODES = [0, -1]   # ← edit this list
+# -- flight modes to train -------------------------------------
+MODES = [7, 6, 4, 0, -1]
  
-# ── environment config ────────────────────────────────────────
+# -- environment config ----------------------------------------
 ENV_ID           = "PyFlyt/QuadX-Waypoints-v4"
 MAX_WAYPOINTS    = 4
 GOAL_DISTANCE    = 4.0
@@ -43,19 +28,19 @@ DOME_SIZE        = 150.0
 MAX_DURATION_SEC = 120.0
 PROXIMITY_SCALE  = 0.3
  
-# ── curriculum config ─────────────────────────────────────────
+# -- curriculum config -----------------------------------------
 CURRICULUM_THRESHOLD = 0.70
-PROBE_EPS            = 10     # episodes used to probe success rate (fast)
+PROBE_EPS            = 10
  
-# ── eval config ───────────────────────────────────────────────
+# -- eval config -----------------------------------------------
 MAX_STEPS  = 1000
 EVAL_EPS   = 10
 EVAL_SEEDS = list(range(SEED, SEED + EVAL_EPS))
  
-# ── shared budget: 125k steps per stage × 4 stages = 500k ────
-TIMESTEPS_PER_STAGE = 250_000   # same for both SAC and PPO
+# -- shared budget----------------------------------------------
+TIMESTEPS_PER_STAGE = 250_000
  
-# ── SAC hyperparameters ───────────────────────────────────────
+# -- SAC hyperparameters ---------------------------------------
 SAC_BATCH_SIZE      = 256
 SAC_GAMMA           = 0.99
 SAC_TAU             = 0.005
@@ -64,7 +49,7 @@ SAC_LR              = 3e-4
 SAC_BUFFER          = 500_000
 SAC_LEARNING_STARTS = 1_000
  
-# ── PPO hyperparameters ───────────────────────────────────────
+# -- PPO hyperparameters ---------------------------------------
 PPO_N_STEPS  = 2048
 PPO_BATCH    = 64
 PPO_EPOCHS   = 10
@@ -73,7 +58,7 @@ PPO_GAE      = 0.95
 PPO_CLIP     = 0.2
 PPO_LR       = 3e-4
  
-# ── WandB ─────────────────────────────────────────────────────
+# -- WandB -----------------------------------------------------
 WANDB_PROJECT = "waypoints"
  
 os.makedirs("checkpoints", exist_ok=True)
@@ -192,7 +177,7 @@ def save_training_curve(returns, stage_at_ep, stage_history, flight_mode, agent)
  
  
 # ═══════════════════════════════════════════════════════════════
-# Episode logging callback (used by both SAC and PPO)
+# Episode logging callback
 # ═══════════════════════════════════════════════════════════════
  
 class EpisodeLogCallback(BaseCallback):
@@ -200,7 +185,7 @@ class EpisodeLogCallback(BaseCallback):
  
     def __init__(self, stage_ref, label=""):
         super().__init__()
-        self.stage_ref       = stage_ref   # list of length 1: [current_stage]
+        self.stage_ref       = stage_ref
         self.label           = label
         self.episode_returns = []
         self.stage_at_ep     = []
@@ -226,7 +211,6 @@ class EpisodeLogCallback(BaseCallback):
  
 # ═══════════════════════════════════════════════════════════════
 # Shared curriculum training function
-# Works for both SAC and PPO — same logic, same budget
 # ═══════════════════════════════════════════════════════════════
  
 def train_curriculum(model, flight_mode, label):
@@ -238,7 +222,7 @@ def train_curriculum(model, flight_mode, label):
     current_stage = 1
     total_ts      = 0
     stage_history = []
-    stage_ref     = [current_stage]   # mutable ref for callback
+    stage_ref     = [current_stage]
  
     all_returns  = []
     all_stage_at = []
@@ -281,7 +265,7 @@ def train_curriculum(model, flight_mode, label):
             print(f"  [{label}] → Advancing to {current_stage} waypoints")
             wandb.log({"curriculum_advance": current_stage, "total_ts": total_ts})
         else:
-            # threshold not met or already at max stage — stop
+            # threshold not met or already at max stage -> stop
             break
  
     print(f"  [{label}] Curriculum done. Total ts: {total_ts:,}  "
@@ -313,7 +297,7 @@ for FLIGHT_MODE in MODES:
     # ══════════════════════════════════════════════════════════
     # SAC
     # ══════════════════════════════════════════════════════════
-    print(f"\n── SAC  flight_mode={FLIGHT_MODE} ──────────────────────────\n")
+    print(f"\n-- SAC  flight_mode={FLIGHT_MODE} --------------------------\n")
  
     wandb.init(
         project = WANDB_PROJECT,
@@ -374,7 +358,7 @@ for FLIGHT_MODE in MODES:
     # ══════════════════════════════════════════════════════════
     # PPO
     # ══════════════════════════════════════════════════════════
-    print(f"\n── PPO  flight_mode={FLIGHT_MODE} ──────────────────────────\n")
+    print(f"\n-- PPO  flight_mode={FLIGHT_MODE} --------------------------\n")
  
     wandb.init(
         project = WANDB_PROJECT,
@@ -432,7 +416,7 @@ for FLIGHT_MODE in MODES:
     wandb.finish()
     print("PPO run closed.")
  
-    print(f"\n── Mode {FLIGHT_MODE} summary ───────────────────────────────")
+    print(f"\n-- Mode {FLIGHT_MODE} summary -------------------------------")
     print(f"  SAC  mean={sac_mean:.2f}  std={sac_std:.2f}  ts={sac_ts:,}")
     print(f"  PPO  mean={ppo_mean:.2f}  std={ppo_std:.2f}  ts={ppo_ts:,}")
  

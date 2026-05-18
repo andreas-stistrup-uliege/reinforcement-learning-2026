@@ -1,14 +1,3 @@
-"""
-dogfight_run.py — overnight training script for MAFixedwingDogfightEnvV2.
-
-Both SAC and PPO use Stable-Baselines3 with self-play snapshot opponents.
-Both run for ~900,000 steps so comparisons are fair.
-
-Run:
-    python dogfight_run.py
-    python dogfight_run.py > logs/dogfight.txt 2>&1
-"""
-
 import copy
 import os
 import numpy as np
@@ -24,44 +13,44 @@ from wandb.integration.sb3 import WandbCallback
 
 from scripts.dogfight_wrapper import DogfightSelfPlayEnv
 
-# ── reproducibility ───────────────────────────────────────────
+# -- reproducibility -------------------------------------------
 SEED = 42
 np.random.seed(SEED)
 
-# ── obs / action dims ─────────────────────────────────────────
+# -- obs / action dims -----------------------------------------
 _env_tmp   = DogfightSelfPlayEnv()
-STATE_DIM  = _env_tmp.observation_space.shape[0]   # 37
-ACTION_DIM = _env_tmp.action_space.shape[0]         # 4
+STATE_DIM  = _env_tmp.observation_space.shape[0]
+ACTION_DIM = _env_tmp.action_space.shape[0]
 ACTION_LOW  = _env_tmp.action_space.low
 ACTION_HIGH = _env_tmp.action_space.high
 _env_tmp.close()
 
-# ── eval config ───────────────────────────────────────────────
+# -- eval config -----------------------------------------------
 MAX_STEPS = 1800
 EVAL_EPS  = 10
 
-# ── self-play config ──────────────────────────────────────────
+# -- self-play config ------------------------------------------
 OPPONENT_UPDATE_FREQ      = 50
 PPO_OPPONENT_UPDATE_STEPS = 180_000
 SNAPSHOT_POOL_SIZE        = 5
 
-# ── reward shaping ────────────────────────────────────────────
+# -- reward shaping --------------------------------------------
 VEL_SLICE     = slice(7, 10)
 REL_SLICE     = slice(26, 29)
 CLOSING_SCALE = 0.01
 HEADING_SCALE = 0.005
 
-# ── SAC hyperparameters  (~900k steps) ────────────────────────
+# -- SAC hyperparameters  --------------------------------------
 SAC_TOTAL_TIMESTEPS = 900_000
 SAC_BATCH_SIZE      = 256
 SAC_GAMMA           = 0.99
 SAC_TAU             = 0.005
-SAC_ALPHA           = 0.1      # ent_coef — lower for sparse reward
+SAC_ALPHA           = 0.1 
 SAC_LR              = 3e-4
 SAC_BUFFER          = 500_000
 SAC_LEARNING_STARTS = 1_000
 
-# ── PPO hyperparameters  (~900k steps) ────────────────────────
+# -- PPO hyperparameters  --------------------------------------
 PPO_TIMESTEPS = 900_000
 PPO_N_STEPS   = 4096
 PPO_BATCH     = 128
@@ -72,7 +61,7 @@ PPO_CLIP      = 0.2
 PPO_LR        = 3e-4
 PPO_ENT_COEF  = 0.01
 
-# ── WandB ─────────────────────────────────────────────────────
+# -- WandB -----------------------------------------------------
 WANDB_PROJECT = "dogfight"
 
 shared_config = {
@@ -314,7 +303,7 @@ class SelfPlaySnapshotCallback(BaseCallback):
 # ═══════════════════════════════════════════════════════════════
 # SAC
 # ═══════════════════════════════════════════════════════════════
-print("\n── SAC ─────────────────────────────────────────────────\n")
+print("\n-- SAC -------------------------------------------------\n")
 
 wandb.init(
     project = WANDB_PROJECT,
@@ -384,7 +373,7 @@ print("SAC run closed.")
 # ═══════════════════════════════════════════════════════════════
 # PPO
 # ═══════════════════════════════════════════════════════════════
-print("\n── PPO ─────────────────────────────────────────────────\n")
+print("\n-- PPO -------------------------------------------------\n")
 
 wandb.init(
     project = WANDB_PROJECT,
