@@ -13,7 +13,7 @@ wandb/
 !requirements.txt
 
 # Models
-*.zip
+#*.zip
 
 # IDE
 .vscode/
