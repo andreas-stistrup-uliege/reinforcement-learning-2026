@@ -212,7 +212,7 @@ for flight_mode in FLIGHT_MODES:
     PPO_LR        = 3e-4
 
     # -- WandB ----------------------------------------------------
-    WANDB_PROJECT = "hover-test"
+    WANDB_PROJECT = "hover"
 
     shared_config = {
         "env_id"      : ENV_ID,
